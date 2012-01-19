@@ -1,0 +1,6 @@
+IBurritoSvc = com.burritopos.service.BurritoSvcJDBCImpl
+ICustomerSvc = com.burritopos.service.CustomerSvcJDBCImpl
+IEmployeeSvc = com.burritopos.service.EmployeeSvcJDBCImpl
+IInventorySvc = com.burritopos.service.InventorySvcJDBCImpl
+IManagerSvc = com.burritopos.service.ManagerSvcJDBCImpl
+IOrderSvc = com.burritopos.service.OrderSvcJDBCImpl
