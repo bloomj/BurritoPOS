@@ -39,5 +39,6 @@
 	<classpathentry kind="lib" path="C:/Jars/hibernate-release-4.0.1.Final/lib/required/javassist-3.15.0-GA.jar"/>
 	<classpathentry kind="lib" path="C:/Jars/hibernate-release-4.0.1.Final/lib/required/jboss-logging-3.1.0.CR2.jar"/>
 	<classpathentry kind="lib" path="C:/Jars/hibernate-release-4.0.1.Final/lib/required/jboss-transaction-api_1.1_spec-1.0.0.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Jars/mongo-2.7.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

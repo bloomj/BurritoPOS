@@ -2,7 +2,7 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <comment>Service Providers</comment>
-<entry key="IBurritoSvc">com.burritopos.service.BurritoSvcHibernateImpl</entry>
+<entry key="IBurritoSvc">com.burritopos.service.BurritoSvcMongoImpl</entry>
 <entry key="ICustomerSvc">com.burritopos.service.CustomerSvcHibernateImpl</entry>
 <entry key="IEmployeeSvc">com.burritopos.service.EmployeeSvcHibernateImpl</entry>
 <entry key="IInventorySvc">com.burritopos.service.InventorySvcHibernateImpl</entry>
