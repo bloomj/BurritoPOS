@@ -44,6 +44,7 @@ public class Manager extends Employee implements Serializable {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.employeeID = employeeID;
+		this.isManager = true;
 	}
 
 	/**

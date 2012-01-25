@@ -3,10 +3,10 @@
 <properties>
 <comment>Service Providers</comment>
 <entry key="IBurritoSvc">com.burritopos.service.BurritoSvcMongoImpl</entry>
-<entry key="ICustomerSvc">com.burritopos.service.CustomerSvcHibernateImpl</entry>
-<entry key="IEmployeeSvc">com.burritopos.service.EmployeeSvcHibernateImpl</entry>
-<entry key="IInventorySvc">com.burritopos.service.InventorySvcHibernateImpl</entry>
-<entry key="IManagerSvc">com.burritopos.service.ManagerSvcHibernateImpl</entry>
-<entry key="IOrderSvc">com.burritopos.service.OrderSvcJDBCImpl</entry>
+<entry key="ICustomerSvc">com.burritopos.service.CustomerSvcMongoImpl</entry>
+<entry key="IEmployeeSvc">com.burritopos.service.EmployeeSvcMongoImpl</entry>
+<entry key="IInventorySvc">com.burritopos.service.InventorySvcMongoImpl</entry>
+<entry key="IManagerSvc">com.burritopos.service.ManagerSvcMongoImpl</entry>
+<entry key="IOrderSvc">com.burritopos.service.OrderSvcMongoImpl</entry>
 <entry key="IAuthenticationSvc">com.burritopos.service.AuthenticationSvcSocketImpl</entry>
 </properties>

@@ -9,7 +9,9 @@ import org.apache.log4j.*;
 
 import com.burritopos.domain.Order;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.StringTokenizer;
 
 
 /**
@@ -18,18 +20,18 @@ import java.util.Date;
  */
 public class OrderSvcFileImpl implements IOrderSvc {
 
-        private static Logger dLog = Logger.getLogger(OrderSvcFileImpl.class);
+	private static Logger dLog = Logger.getLogger(OrderSvcFileImpl.class);
 
 	@Override
 	public Order getOrder(Integer id) throws IOException, ClassNotFoundException, Exception {
 		dLog.info(new Date() + " | Entering method getOrder | Order ID: "+id);
 		Order o = null;
 		ObjectInputStream input = null;
-		
+
 		try {
 			File file = new File("Order_"+id+".txt");
 			boolean exists = file.exists();
-			
+
 			//ensure we were passed a valid object before attempting to write
 			if(exists) {
 				input = new ObjectInputStream (new FileInputStream("Order_"+id+".txt"));
@@ -51,7 +53,7 @@ public class OrderSvcFileImpl implements IOrderSvc {
 				input.close();
 			}
 		}
-		
+
 		return o;
 	}
 
@@ -60,7 +62,7 @@ public class OrderSvcFileImpl implements IOrderSvc {
 		dLog.info(new Date() + " | Entering method storeOrder | Order ID: "+o.getOrderID());
 		ObjectOutputStream output = null;
 		boolean result = false;
-		
+
 		try {
 			//ensure we were passed a valid object before attempting to write
 			if(o.validate()) {
@@ -84,7 +86,7 @@ public class OrderSvcFileImpl implements IOrderSvc {
 				output.close();
 			}
 		}
-		
+
 		return result;
 	}
 
@@ -92,24 +94,65 @@ public class OrderSvcFileImpl implements IOrderSvc {
 	public boolean deleteOrder(Integer id) throws Exception {
 		dLog.info(new Date() + " | Entering method deleteOrder | Order ID:"+id);
 		boolean result = false;
-		
+
 		try {
-		    File f = new File("Order_"+id+".txt");
+			File f = new File("Order_"+id+".txt");
 
-		    // Ensure the file exists
-		    if (!f.exists())
-		      throw new IllegalArgumentException("deleteOrder: no such file or directory: Order_"+id+".txt");
+			// Ensure the file exists
+			if (!f.exists())
+				throw new IllegalArgumentException("deleteOrder: no such file or directory: Order_"+id+".txt");
 
-		    // Ensure the file is not locked
-		    if (!f.canWrite())
-		      throw new IllegalArgumentException("deleteOrder: write protected: Order_"+id+".txt");	
-		    
-		    // Attempt to delete it
-		    result = f.delete();
+			// Ensure the file is not locked
+			if (!f.canWrite())
+				throw new IllegalArgumentException("deleteOrder: write protected: Order_"+id+".txt");	
+
+			// Attempt to delete it
+			result = f.delete();
 		}
 		catch(Exception e) {
 			dLog.error(new Date() + " | Exception in deleteOrder: "+e.getMessage());
 			result = false;
+		}
+
+		return result;
+	}
+
+	@Override
+	public ArrayList<Order> getAllOrders() throws Exception {
+		dLog.info(new Date() + " | Entering method getAllOrders");
+		ArrayList<Order> result = new ArrayList<Order>();
+
+		try {
+			File dir1 = new File (".");
+			dLog.trace(new Date() + " | Current directory: " + dir1.getCanonicalPath());
+
+			String[] children = dir1.list(); 
+			if (children != null) { 
+				for (int i=0; i<children.length; i++) { 
+					// Get filename of file or directory 
+					String filename = children[i];
+					dLog.trace(new Date() + " |   - On file: " + filename);
+					StringTokenizer st = new StringTokenizer(filename, "_");
+					String firstTok = st.nextToken();
+					dLog.trace(new Date() + " |   - First Token: " + firstTok);
+					if(firstTok.equalsIgnoreCase("Order")) {
+						String secondTok = st.nextToken();
+						dLog.trace(new Date() + " |   - Second Token: " + secondTok);
+						String[] parts = secondTok.split("\\.");
+						dLog.trace(new Date() + " |   - Parts Length: " + parts.length);
+						if(parts.length > 0) {
+							Integer tOrderID = Integer.parseInt(parts[0]);
+							dLog.trace(new Date() + " |   - Found order: " + tOrderID);
+
+							//add this file 
+							result.add(getOrder(tOrderID));
+						}
+					}
+				}
+			}
+		}
+		catch(Exception e) {
+			dLog.error(new Date() + " | Exception in getAllOrders: "+e.getMessage());
 		}
 		
 		return result;

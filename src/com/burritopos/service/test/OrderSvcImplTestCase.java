@@ -23,6 +23,7 @@ import junit.framework.TestCase;
 public class OrderSvcImplTestCase extends TestCase {
 	private Factory factory;
 	private Order o;
+	private Burrito b;
 
     //private static Logger dLog = Logger.getLogger(OrderSvcImplTestCase.class);
 
@@ -37,6 +38,8 @@ public class OrderSvcImplTestCase extends TestCase {
         
 		factory = Factory.getInstance();
 		o = new Order(new Integer("1"),new ArrayList<Burrito>(),new Date(),false,false,new BigDecimal("17.00"));
+		b = new Burrito(new Integer("1"),true,false,false,true,false,false,true,false,false,true,true,false,false,true,false,true,false,true,false,false,false,true,new BigDecimal("0.00"));
+		o.getBurritos().add(b);
 	}
 
 	/* (non-Javadoc)

@@ -18,18 +18,18 @@ import java.util.Date;
  */
 public class ManagerSvcFileImpl implements IManagerSvc {
 
-        private static Logger dLog = Logger.getLogger(ManagerSvcFileImpl.class);
+	private static Logger dLog = Logger.getLogger(ManagerSvcFileImpl.class);
 
 	@Override
 	public Manager getManager(Integer id) throws IOException, ClassNotFoundException, Exception {
 		dLog.info(new Date() + " | Entering method getManager | Manager ID: "+id);
 		Manager m = null;
 		ObjectInputStream input = null;
-		
+
 		try {
 			File file = new File("Manager_"+id+".txt");
 			boolean exists = file.exists();
-			
+
 			//ensure we were passed a valid object before attempting to write
 			if(exists) {
 				input = new ObjectInputStream (new FileInputStream("Manager_"+id+".txt"));
@@ -51,7 +51,7 @@ public class ManagerSvcFileImpl implements IManagerSvc {
 				input.close();
 			}
 		}
-		
+
 		return m;
 	}
 
@@ -60,7 +60,7 @@ public class ManagerSvcFileImpl implements IManagerSvc {
 		dLog.info(new Date() + " | Entering method storeManager | Manager ID: "+m.getEmployeeID());
 		ObjectOutputStream output = null;
 		boolean result = false;
-		
+
 		try {
 			//ensure we were passed a valid object before attempting to write
 			if(m.validate()) {
@@ -84,7 +84,7 @@ public class ManagerSvcFileImpl implements IManagerSvc {
 				output.close();
 			}
 		}
-		
+
 		return result;
 	}
 
@@ -92,26 +92,26 @@ public class ManagerSvcFileImpl implements IManagerSvc {
 	public boolean deleteManager(Integer id) throws Exception {
 		dLog.info(new Date() + " | Entering method deleteManger | Manager ID:"+id);
 		boolean result = false;
-		
+
 		try {
-		    File f = new File("Manager_"+id+".txt");
+			File f = new File("Manager_"+id+".txt");
 
-		    // Ensure the file exists
-		    if (!f.exists())
-		      throw new IllegalArgumentException("deleteManger: no such file or directory: Manager_"+id+".txt");
+			// Ensure the file exists
+			if (!f.exists())
+				throw new IllegalArgumentException("deleteManger: no such file or directory: Manager_"+id+".txt");
 
-		    // Ensure the file is not locked
-		    if (!f.canWrite())
-		      throw new IllegalArgumentException("deleteManger: write protected: Manager_"+id+".txt");	
-		    
-		    // Attempt to delete it
-		    result = f.delete();
+			// Ensure the file is not locked
+			if (!f.canWrite())
+				throw new IllegalArgumentException("deleteManger: write protected: Manager_"+id+".txt");	
+
+			// Attempt to delete it
+			result = f.delete();
 		}
 		catch(Exception e) {
 			dLog.error(new Date() + " | Exception in deleteManger: "+e.getMessage());
 			result = false;
 		}
-		
+
 		return result;
 	}
 }

@@ -87,7 +87,7 @@ public class BurritoSvcMongoImpl implements IBurritoSvc {
             }
 		}
 		catch(Exception e) {
-			dLog.error(new Date() + " | Exception in getBurrito: "+e.getMessage());
+			dLog.error(new Date() + " | Exception in storeBurrito: "+e.getMessage());
 		}
 		
 		return result;

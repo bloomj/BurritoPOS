@@ -5,6 +5,8 @@ package com.burritopos.service;
 
 //import java.util.UUID;
 
+import java.util.ArrayList;
+
 import com.burritopos.domain.Order;
 
 /**
@@ -17,4 +19,5 @@ public interface IOrderSvc extends IService {
 	public boolean storeOrder(Order o) throws Exception;
 	public Order getOrder(Integer id) throws Exception;
 	public boolean deleteOrder(Integer id) throws Exception;
+	public ArrayList<Order> getAllOrders() throws Exception;
 }

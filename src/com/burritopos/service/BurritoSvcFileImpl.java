@@ -17,18 +17,18 @@ import java.util.Date;
  */
 public class BurritoSvcFileImpl implements IBurritoSvc {
 
-        private static Logger dLog = Logger.getLogger(BurritoSvcFileImpl.class);
+	private static Logger dLog = Logger.getLogger(BurritoSvcFileImpl.class);
 
 	@Override
 	public Burrito getBurrito(Integer id) throws IOException, ClassNotFoundException, Exception {
 		dLog.info(new Date() + " | Entering method getBurrito | ID: " + id);
 		Burrito b = null;
 		ObjectInputStream input = null;
-		
+
 		try {
 			File file = new File("Burrito_"+id+".txt");
 			boolean exists = file.exists();
-			
+
 			//ensure we were passed a valid object before attempting to write
 			if(exists) {
 				input = new ObjectInputStream (new FileInputStream("Burrito_"+id+".txt"));
@@ -50,7 +50,7 @@ public class BurritoSvcFileImpl implements IBurritoSvc {
 				input.close();
 			}
 		}
-		
+
 		return b;
 	}
 
@@ -59,7 +59,7 @@ public class BurritoSvcFileImpl implements IBurritoSvc {
 		dLog.info(new Date() + " | Entering method storeBurrito | Burrito ID: "+b.getId());
 		ObjectOutputStream output = null;
 		boolean result = false;
-		
+
 		try {
 			//ensure we were passed a valid object before attempting to write
 			if(b.validate()) {
@@ -83,7 +83,7 @@ public class BurritoSvcFileImpl implements IBurritoSvc {
 				output.close();
 			}
 		}
-		
+
 		return result;
 	}
 
@@ -91,26 +91,26 @@ public class BurritoSvcFileImpl implements IBurritoSvc {
 	public boolean deleteBurrito(Integer id) throws Exception {
 		dLog.info(new Date() + " | Entering method deleteBurrito | Burrito ID:"+id);
 		boolean result = false;
-		
+
 		try {
-		    File f = new File("Burrito_"+id+".txt");
+			File f = new File("Burrito_"+id+".txt");
 
-		    // Ensure the file exists
-		    if (!f.exists())
-		      throw new IllegalArgumentException("deleteBurrito: no such file or directory: Burrito_"+id+".txt");
+			// Ensure the file exists
+			if (!f.exists())
+				throw new IllegalArgumentException("deleteBurrito: no such file or directory: Burrito_"+id+".txt");
 
-		    // Ensure the file is not locked
-		    if (!f.canWrite())
-		      throw new IllegalArgumentException("deleteBurrito: write protected: Burrito_"+id+".txt");	
-		    
-		    // Attempt to delete it
-		    result = f.delete();
+			// Ensure the file is not locked
+			if (!f.canWrite())
+				throw new IllegalArgumentException("deleteBurrito: write protected: Burrito_"+id+".txt");	
+
+			// Attempt to delete it
+			result = f.delete();
 		}
 		catch(Exception e) {
 			dLog.error(new Date() + " | Exception in deleteBurrito: "+e.getMessage());
 			result = false;
 		}
-		
+
 		return result;
 	}
 }

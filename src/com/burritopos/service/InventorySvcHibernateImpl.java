@@ -18,31 +18,31 @@ import java.util.Date;
  */
 public class InventorySvcHibernateImpl extends BaseSvcHibernateImpl implements IInventorySvc {
 
-        private static Logger dLog = Logger.getLogger(InventorySvcHibernateImpl.class);
+	private static Logger dLog = Logger.getLogger(InventorySvcHibernateImpl.class);
 
 	@Override
 	public Inventory getInventory(Integer id) throws ClassNotFoundException, Exception {
 		dLog.info(new Date() + " | Entering method getInventory | Inventory ID: "+id);
 		Inventory i = null;
-                Session session = null;
-		
+		Session session = null;
+
 		try {
-                    session = getSession();
-                    Transaction tranx = session.beginTransaction();
-                    i = (Inventory)session.get(Inventory.class, id);
-                    tranx.commit();
+			session = getSession();
+			Transaction tranx = session.beginTransaction();
+			i = (Inventory)session.get(Inventory.class, id);
+			tranx.commit();
 		} 
 		catch(Exception e) {
 			dLog.error(new Date() + " | Exception in getInventory: "+e.getMessage());
-                        System.out.println(new Date() + " | Exception in getInventory: "+e.getMessage());
+			System.out.println(new Date() + " | Exception in getInventory: "+e.getMessage());
 		}
 		finally {
 			//ensure that session is close regardless of the errors in try/catch
-                        if(session != null) {
-                            session.close();
-                        }
+			if(session != null) {
+				session.close();
+			}
 		}
-		
+
 		return i;
 	}
 
@@ -50,31 +50,31 @@ public class InventorySvcHibernateImpl extends BaseSvcHibernateImpl implements I
 	public boolean storeInventory(Inventory i) throws Exception {
 		dLog.info(new Date() + " | Entering method storeInventory | Inventory ID: "+i.getId());
 		boolean result = false;
-                Session session = null;
-		
+		Session session = null;
+
 		try {
 			//ensure we were passed a valid object before attempting to write
 			if(i.validate()) {
-                            session = getSession();
-                            Transaction tranx = session.beginTransaction();
-                            session.save(i);
-                            tranx.commit();
-                            result = tranx.wasCommitted();
-                            dLog.info(new Date() + " | Was committed: "+result);
+				session = getSession();
+				Transaction tranx = session.beginTransaction();
+				session.save(i);
+				tranx.commit();
+				result = tranx.wasCommitted();
+				dLog.info(new Date() + " | Was committed: "+result);
 			}
 		} 
 		catch(Exception e) {
 			dLog.error(new Date() + " | Exception in storeInventory: "+e.getMessage());
-                        System.out.println(new Date() + " | Exception in storeInventory: "+e.getMessage());
+			System.out.println(new Date() + " | Exception in storeInventory: "+e.getMessage());
 			result = false;
 		}
 		finally {
 			//ensure that session is close regardless of the errors in try/catch
-                        if(session != null) {
-                            session.close();
-                        }
+			if(session != null) {
+				session.close();
+			}
 		}
-		
+
 		return result;
 	}
 
@@ -82,30 +82,30 @@ public class InventorySvcHibernateImpl extends BaseSvcHibernateImpl implements I
 	public boolean deleteInventory(Integer id) throws Exception {
 		dLog.info(new Date() + " | Entering method deleteInventory | Inventory ID:"+id);
 		boolean result = false;
-                Session session = null;
-		
-		try {
-                    session = getSession();
-                    String hql = "delete from Inventory where id = " + id.toString();
-                    Query query = session.createQuery(hql);
-                    int row = query.executeUpdate();
+		Session session = null;
 
-                    if (row == 0)
-                        result = false;
-                    else
-                        result = true;
+		try {
+			session = getSession();
+			String hql = "delete from Inventory where id = " + id.toString();
+			Query query = session.createQuery(hql);
+			int row = query.executeUpdate();
+
+			if (row == 0)
+				result = false;
+			else
+				result = true;
 		}
 		catch(Exception e) {
 			dLog.error(new Date() + " | Exception in deleteInventory: "+e.getMessage());
 			result = false;
 		}
-                finally {
+		finally {
 			//ensure that session is close regardless of the errors in try/catch
-                        if(session != null) {
-                            session.close();
-                        }
+			if(session != null) {
+				session.close();
+			}
 		}
-		
+
 		return result;
 	}
 }
