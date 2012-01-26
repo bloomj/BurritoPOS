@@ -1,0 +1,11 @@
+com.burritopos
+com.burritopos.application
+com.burritopos.application.test
+com.burritopos.business
+com.burritopos.business.test
+com.burritopos.domain
+com.burritopos.domain.test
+com.burritopos.exception
+com.burritopos.presentation
+com.burritopos.service
+com.burritopos.service.test
