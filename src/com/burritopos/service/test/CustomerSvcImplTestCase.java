@@ -46,17 +46,17 @@ public class CustomerSvcImplTestCase extends TestCase {
 		try {
 			//week 3
 			//ICustomerSvc ics = factory.getCustomerSvc();
-			
+
 			//week 4
 			ICustomerSvc ics = (ICustomerSvc) factory.getService(ICustomerSvc.NAME); 
-			
+
 			// First let's store the Customer
 			assertTrue(ics.storeCustomer(c));
-			
+
 			// Then let's read it back in
 			c = ics.getCustomer(c.getId());
 			assertTrue(c.validate());
-			
+
 			// Finally, let's cleanup the file that was created
 			assertTrue(ics.deleteCustomer(c.getId()));
 		}
@@ -65,18 +65,18 @@ public class CustomerSvcImplTestCase extends TestCase {
 			fail(e.getMessage());
 		}
 	}
-	
+
 	public void testInvalidGetCustomer() throws AssertionFailedError {
 		try {
 			//week 3
 			//ICustomerSvc ics = factory.getCustomerSvc();
-			
+
 			//week 4
 			ICustomerSvc ics = (ICustomerSvc) factory.getService(ICustomerSvc.NAME);
 			c = ics.getCustomer(new Integer("1234"));
-                        
-                        if(c != null)
-                            assertFalse(c.validate());
+
+			if(c != null)
+				assertFalse(c.validate());
 		}
 		catch(Exception e) {
 			System.out.println("Exception in testInvalidGetCustomer: " + e.getMessage());

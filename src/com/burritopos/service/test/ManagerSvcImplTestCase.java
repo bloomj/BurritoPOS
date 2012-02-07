@@ -54,9 +54,9 @@ public class ManagerSvcImplTestCase extends TestCase {
 			assertTrue(ics.storeManager(m));
 			
 			// Then let's read it back in
-			System.out.println("here1");
+			//System.out.println("here1");
 			m = ics.getManager(m.getEmployeeID());
-			System.out.println("here2");
+			//System.out.println("here2");
 			assertTrue(m.validate());
 			
 			// Finally, let's cleanup the file that was created

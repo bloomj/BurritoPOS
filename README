@@ -2,6 +2,7 @@ This is simple Point of Service application for a small town burrito joint.
 It serves as a starting point to refresh memory of or learn about new/existing languages, frameworks, design patterns, etc.
 
 Currently demonstrates:
+  - Eclipse
   - Java
   - Ant
   - JUnit
@@ -12,3 +13,4 @@ Currently demonstrates:
   - N-tier architecture
   - client/server comms
   - Mongo (NoSQL)
+  - Javadoc

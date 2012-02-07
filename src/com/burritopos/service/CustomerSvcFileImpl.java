@@ -18,18 +18,18 @@ import java.util.Date;
  */
 public class CustomerSvcFileImpl implements ICustomerSvc {
 
-        private static Logger dLog = Logger.getLogger(CustomerSvcFileImpl.class);
+	private static Logger dLog = Logger.getLogger(CustomerSvcFileImpl.class);
 
 	@Override
 	public Customer getCustomer(Integer id) throws Exception {
 		dLog.info(new Date() + " | Entering method getCustomer | Customer ID: "+id);
 		Customer c = new Customer();
 		ObjectInputStream input = null;
-		
+
 		try {
 			File file = new File("Customer_"+id+".txt");
 			boolean exists = file.exists();
-			
+
 			//ensure we were passed a valid object before attempting to write
 			if(exists) {
 				input = new ObjectInputStream (new FileInputStream("Customer_"+id+".txt"));
@@ -51,7 +51,7 @@ public class CustomerSvcFileImpl implements ICustomerSvc {
 				input.close();
 			}
 		}
-		
+
 		return c;
 	}
 
@@ -60,7 +60,7 @@ public class CustomerSvcFileImpl implements ICustomerSvc {
 		dLog.info(new Date() + " | Entering method storeCustomer | Customer ID: "+c.getId());
 		ObjectOutputStream output = null;
 		boolean result = false;
-		
+
 		try {
 			//ensure we were passed a valid object before attempting to write
 			if(c.validate()) {
@@ -84,7 +84,7 @@ public class CustomerSvcFileImpl implements ICustomerSvc {
 				output.close();
 			}
 		}
-		
+
 		return result;
 	}
 
@@ -92,26 +92,26 @@ public class CustomerSvcFileImpl implements ICustomerSvc {
 	public boolean deleteCustomer(Integer id) throws Exception {
 		dLog.info(new Date() + " | Entering method deleteCustomer | Customer ID:"+id);
 		boolean result = false;
-		
+
 		try {
-		    File f = new File("Customer_"+id+".txt");
+			File f = new File("Customer_"+id+".txt");
 
-		    // Ensure the file exists
-		    if (!f.exists())
-		      throw new IllegalArgumentException("deleteCustomer: no such file or directory: Customer_"+id+".txt");
+			// Ensure the file exists
+			if (!f.exists())
+				throw new IllegalArgumentException("deleteCustomer: no such file or directory: Customer_"+id+".txt");
 
-		    // Ensure the file is not locked
-		    if (!f.canWrite())
-		      throw new IllegalArgumentException("deleteCustomer: write protected: Customer_"+id+".txt");	
-		    
-		    // Attempt to delete it
-		    result = f.delete();
+			// Ensure the file is not locked
+			if (!f.canWrite())
+				throw new IllegalArgumentException("deleteCustomer: write protected: Customer_"+id+".txt");	
+
+			// Attempt to delete it
+			result = f.delete();
 		}
 		catch(Exception e) {
 			dLog.error(new Date() + " | Exception in deleteCustomer: "+e.getMessage());
 			result = false;
 		}
-		
+
 		return result;
 	}
 
