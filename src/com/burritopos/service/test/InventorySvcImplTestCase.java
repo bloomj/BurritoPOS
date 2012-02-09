@@ -56,6 +56,11 @@ public class InventorySvcImplTestCase extends TestCase {
 			i = ics.getInventory(i.getId());
 			assertTrue(i.validate());
 			
+			// Update the Inventory
+			i.setCucumberQty(17);
+			i.setGuacamoleQty(1);
+			assertTrue(ics.storeInventory(i));
+			
 			// Finally, let's cleanup the file that was created
 			assertTrue(ics.deleteInventory(i.getId()));
 		}

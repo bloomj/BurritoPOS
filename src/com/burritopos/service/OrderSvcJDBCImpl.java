@@ -24,6 +24,7 @@ import java.sql.*;
 public class OrderSvcJDBCImpl implements IOrderSvc {
 
 	private static Logger dLog = Logger.getLogger(OrderSvcJDBCImpl.class);
+    // TODO: Come back and move connection string to encrypted config file or some other method
 	private static String connString = "jdbc:mysql://localhost/neatoburrito?user=root&password=admin";
 
 	@Override
@@ -36,7 +37,7 @@ public class OrderSvcJDBCImpl implements IOrderSvc {
 
 		try {
 			conn = DriverManager.getConnection(connString);
-			String sql = "select * from Orders LEFT JOIN Burrito on Orders.orderID = Burrito.orderID WHERE Orders.orderID = ?";
+			String sql = "select *, b.id from Orders LEFT JOIN Burrito on Orders.orderID = Burrito.orderID WHERE Orders.orderID = ?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, id.toString());
 			ResultSet rs = stmt.executeQuery ();
@@ -57,10 +58,10 @@ public class OrderSvcJDBCImpl implements IOrderSvc {
 				//String bId = rs.getString("id");
 				System.out.println("Is null: " + rs.wasNull());
 				if(!rs.wasNull()) {
-					dLog.info(new Date() + " | Adding burrito to Order | Burrito ID: "+rs.getString("id"));
-					System.out.println(new Date() + " | Adding burrito to Order | Burrito ID: "+rs.getString("id"));
+					dLog.info(new Date() + " | Adding burrito to Order | Burrito ID: "+rs.getString("b.id"));
+					System.out.println(new Date() + " | Adding burrito to Order | Burrito ID: "+rs.getString("b.id"));
 					Burrito b = new Burrito();
-					b.setId(id);
+					b.setId(rs.getInt("b.id"));
 					b.setBeef(rs.getBoolean("beef"));
 					b.setBlackBeans(rs.getBoolean("blackBeans"));
 					b.setBrownRice(rs.getBoolean("brownRice"));

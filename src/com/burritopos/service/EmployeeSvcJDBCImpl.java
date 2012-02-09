@@ -20,6 +20,7 @@ import java.sql.*;
 public class EmployeeSvcJDBCImpl implements IEmployeeSvc {
 
 	private static Logger dLog = Logger.getLogger(EmployeeSvcJDBCImpl.class);
+    // TODO: Come back and move connection string to encrypted config file or some other method
 	private static String connString = "jdbc:mysql://localhost/neatoburrito?user=root&password=admin";
 
 	@Override

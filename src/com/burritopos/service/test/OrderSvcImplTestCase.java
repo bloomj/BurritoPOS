@@ -68,6 +68,11 @@ public class OrderSvcImplTestCase extends TestCase {
 			o = ics.getOrder(o.getOrderID());
 			assertTrue(o.validate());
 			
+			// Update the Order
+			o.setIsComplete(true);
+			o.setIsSubmitted(true);
+			assertTrue(ics.storeOrder(o));
+			
 			// Finally, let's cleanup the file that was created
 			assertTrue(ics.deleteOrder(o.getOrderID()));
 		}

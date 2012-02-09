@@ -56,13 +56,20 @@ public class BurritoSvcImplTestCase extends TestCase {
 
             dLog.trace(new Date() + " | TEST | Going to store burrito");
             System.out.println("TEST | Going to store burrito");
-			// First let's store the Burrito
+			// First let's create the Burrito
 			assertTrue(ics.storeBurrito(b));
 
             dLog.trace(new Date() + " | TEST | Going to read burrito");
 			// Then let's read it back in
 			b = ics.getBurrito(b.getId());
 			assertTrue(b.validate());
+			
+			dLog.trace(new Date() + " | TEST | Going to update burrito");
+			// Update the burrito
+			b.setBeef(false);
+			b.setBrownRice(true);
+			b.setHummus(true);
+			assertTrue(ics.storeBurrito(b));
 
             dLog.trace(new Date() + " | TEST | Going to delete burrito");
 			// Finally, let's cleanup the file that was created

@@ -20,6 +20,7 @@ import java.sql.*;
 public class BurritoSvcJDBCImpl implements IBurritoSvc {
 
 	private static Logger dLog = Logger.getLogger(BurritoSvcJDBCImpl.class);
+	// TODO: Come back and move connection string to encrypted config file or some other method
 	private static String connString = "jdbc:mysql://localhost/neatoburrito?user=root&password=admin";
 
 	@Override

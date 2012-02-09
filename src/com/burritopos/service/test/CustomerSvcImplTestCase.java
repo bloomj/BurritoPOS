@@ -56,6 +56,10 @@ public class CustomerSvcImplTestCase extends TestCase {
 			// Then let's read it back in
 			c = ics.getCustomer(c.getId());
 			assertTrue(c.validate());
+			
+			// Update the Customer
+			c.setLastName("Smith");
+			assertTrue(ics.storeCustomer(c));
 
 			// Finally, let's cleanup the file that was created
 			assertTrue(ics.deleteCustomer(c.getId()));

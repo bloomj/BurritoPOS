@@ -56,6 +56,10 @@ public class EmployeeSvcImplTestCase extends TestCase {
 			e = ics.getEmployee(e.getEmployeeID());
 			assertTrue(e.validate());
 			
+			// Update the Employee
+			e.setLastName("Smith");
+			assertTrue(ics.storeEmployee(e));
+			
 			// Finally, let's cleanup the file that was created
 			assertTrue(ics.deleteEmployee(e.getEmployeeID()));
 		}
