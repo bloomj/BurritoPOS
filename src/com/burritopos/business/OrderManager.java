@@ -79,12 +79,35 @@ public class OrderManager extends FactoryManager {
 
 		try {
 			if(o.validate()) {
+				if(orderSvc.deleteOrder(o.getOrderID()))
+					result = true;
+			}
+		}
+		catch(Exception e) {
+			dLog.error(new Date() + " | Exception in updateOrder: "+e.getMessage());
+			result = false;
+		}
+
+		return result;
+	}
+	
+	/**
+	 * 
+	 * @param o
+	 * @return success of operation
+	 * @throws Exception
+	 */
+	public boolean deleteOrder(Order o) throws Exception {
+		boolean result = false;
+
+		try {
+			if(o.validate()) {
 				if(orderSvc.storeOrder(o))
 					result = true;
 			}
 		}
 		catch(Exception e) {
-			dLog.error(new Date() + " | Exception in createOrder: "+e.getMessage());
+			dLog.error(new Date() + " | Exception in deleteOrder: "+e.getMessage());
 			result = false;
 		}
 

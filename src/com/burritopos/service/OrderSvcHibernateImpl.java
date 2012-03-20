@@ -135,7 +135,6 @@ public class OrderSvcHibernateImpl extends BaseSvcHibernateImpl implements IOrde
 		return result;
 	}
 
-	//TODO: come back and reduce number of reads on DB
 	@Override
 	public ArrayList<Order> getAllOrders() throws Exception {
 		dLog.info(new Date() + " | Entering method getAllOrders");
@@ -152,7 +151,7 @@ public class OrderSvcHibernateImpl extends BaseSvcHibernateImpl implements IOrde
 			List<?> list = query.list();
 			
 			for(int n=0; n<list.size(); n++){
-				result.add(getOrder(((Order)list.get(n)).getOrderID()));
+				result.add((Order)list.get(n));
 			}
 			
 			tranx.commit();

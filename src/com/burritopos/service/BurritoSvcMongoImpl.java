@@ -55,6 +55,7 @@ public class BurritoSvcMongoImpl implements IBurritoSvc {
 	        query.put("jalapenos", b.isJalapenos());
 	        query.put("lettuce", b.isLettuce());
 	        query.put("onion", b.isOnion());
+	        query.put("orderID", b.getOrderId());
 	        query.put("pintoBeans", b.isPintoBeans());
 	        query.put("price", Double.valueOf(b.getPrice().toString()));
 	        query.put("salsaPico", b.isSalsaPico());
@@ -126,6 +127,7 @@ public class BurritoSvcMongoImpl implements IBurritoSvc {
                 b.setJalapenos(myDoc.getBoolean("jalapenos"));
                 b.setLettuce(myDoc.getBoolean("lettuce"));
                 b.setOnion(myDoc.getBoolean("onion"));
+                b.setOrderId(myDoc.getInt("orderID"));
                 b.setPintoBeans(myDoc.getBoolean("pintoBeans"));
                 b.setPrice(BigDecimal.valueOf(myDoc.getDouble("price")));
                 b.setSalsaPico(myDoc.getBoolean("salsaPico"));

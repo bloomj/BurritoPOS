@@ -69,6 +69,15 @@ public class BurritoManagerTestCase extends TestCase {
 			System.out.println("Start testUpdateBurrito");
 			assertTrue(bManager.createBurrito(b));
 			
+			b.setBeef(rand.nextBoolean());
+			b.setBlackBeans(rand.nextBoolean());
+			b.setFlourTortilla(rand.nextBoolean());
+			b.setChiliTortilla(rand.nextBoolean());
+			b.setSalsaSpecial(rand.nextBoolean());
+			b.setJalapenos(rand.nextBoolean());
+			
+			assertTrue(bManager.updateBurrito(b));
+			
 			assertTrue(bManager.deleteBurrito(b));
 			System.out.println("Finish testUpdateBurrito");
 		}
