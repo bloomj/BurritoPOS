@@ -67,7 +67,7 @@ public class Order implements Serializable {
 	 * @return success or failure
 	 */
 	public boolean validate() {
-                System.out.println(new Date() + "[Burrito][Validate] | orderID: " + this.orderID + " | burritos: " + this.burritos.size() + " | isSubmitted: " + this.isSubmitted + " | isComplete: " + this.isComplete + " | totalCost: " + this.totalCost);
+        System.out.println(new Date() + "[Burrito][Validate] | orderID: " + this.orderID + " | burritos: " + this.burritos.size() + " | isSubmitted: " + this.isSubmitted + " | isComplete: " + this.isComplete + " | totalCost: " + this.totalCost);
 		if(this.orderID != null && this.burritos != null && this.orderDate != null && this.isSubmitted != null && this.isComplete != null && this.totalCost != null)
 			return true;
 		else

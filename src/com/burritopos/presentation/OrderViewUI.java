@@ -189,6 +189,7 @@ public class OrderViewUI extends JInternalFrame {
 			if(orderList.getSelectedRow() != -1) {
 				if(oManager.cancelOrder(tOrders.get(orderList.getSelectedRow()))) {
 					model.removeRow(orderList.getSelectedRow());
+					tOrders = oManager.getOrderHistories();
 					updateTotalSales();
 				}
 				else
@@ -220,10 +221,10 @@ public class OrderViewUI extends JInternalFrame {
 		try {
 			BigDecimal totalSales = new BigDecimal("0");
 
-			tOrders = oManager.getOrderHistories();
 			for(int n=0; n<tOrders.size(); n++) {
 				dLog.trace(new Date() + " | Order: " + n + " | Total Sales: $" + tOrders.get(n).getTotalCost());
-				totalSales = totalSales.add(tOrders.get(n).getTotalCost());
+				if(tOrders.get(n).getTotalCost() != null)
+					totalSales = totalSales.add(tOrders.get(n).getTotalCost());
 			}
 
 			dLog.trace(new Date() + " | Total Sales: $" + totalSales);

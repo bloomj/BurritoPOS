@@ -85,7 +85,7 @@ public class BurritoDialog extends JDialog {
 	private Burrito newBurrito;
 	private int addResult;
 	private Inventory curInventory;
-        private Random rand;
+    private Random rand;
 	
 	// Order constructor
 	public BurritoDialog (Frame owner, String name, boolean modal, Inventory i) throws Exception {

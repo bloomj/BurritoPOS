@@ -272,11 +272,16 @@ public class OrderUI extends JInternalFrame {
 		
 		try {
 			if(burritoList.getSelectedRow() != -1) {
-				if(oManager.removeBurritoFromOrder(newOrder, newOrder.getBurritos().get(burritoList.getSelectedRow()))) {
+				Burrito tBurrito = newOrder.getBurritos().get(burritoList.getSelectedRow());
+				if(oManager.removeBurritoFromOrder(newOrder, tBurrito)) {
 					model.removeRow(burritoList.getSelectedRow());
 					
+					//update all burrito cell numbers
+					for(int n=0; n<model.getRowCount(); n++)
+						model.setValueAt(n, n, 1);
+					
 					//return ingredients back to inventory
-					iManager.returnToInventory(curInventory, bDialog.getNewBurrito());
+					iManager.returnToInventory(curInventory, tBurrito);
 					iManager.updateInventory(curInventory);
 					
 					//update cost
