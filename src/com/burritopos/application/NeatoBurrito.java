@@ -1,6 +1,6 @@
 /*
  * 
- * Copyright (c) 2011, James Bloom
+ * Copyright (c) 2011-2013, James Bloom
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -15,7 +15,6 @@
  *  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS 
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package com.burritopos.application;
 
 import org.apache.log4j.*;
@@ -37,7 +36,6 @@ import java.util.Date;
  */
 @SuppressWarnings("unused")
 public class NeatoBurrito {
-
     private static Logger dLog = Logger.getLogger(NeatoBurrito.class);
 
 	public static void main(String [ ] args)
@@ -46,7 +44,7 @@ public class NeatoBurrito {
             String propertiesFile = "log4j.properties";
             PropertyConfigurator.configure(propertiesFile);
 
-            dLog.info(new Date() + " | Starting Neato Burrito POS execution");
+            dLog.info("Starting Neato Burrito POS execution");
 			
 			//main entry point into our POS system here
 			// week 6
@@ -64,13 +62,15 @@ public class NeatoBurrito {
 			logUI.setBounds(0, 0, 400, 250);
 			logUI.setVisible(true);
 			
-			dLog.info(new Date() + " | Finishing Neato Burrito POS execution");
+			dLog.info("Finishing Neato Burrito POS execution");
 		}
 		/*catch(ServiceLoadException e1) {
-			System.out.println("Exception in NeatoBurrito: "+e1.getMessage());
+			dLog.error("Exception in NeatoBurrito: "+e1.getMessage());
+			e1.printstacktrace();
 		}*/
 		catch(Exception e2) {
-			dLog.error(new Date() + " | Exception in NeatoBurrito: "+e2.getMessage());
+			dLog.error("Exception in NeatoBurrito: "+e2.getMessage());
+			e2.printStackTrace();
 		}
 	}
 }

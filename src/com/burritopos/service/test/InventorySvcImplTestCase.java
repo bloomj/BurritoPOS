@@ -3,70 +3,64 @@
  */
 package com.burritopos.service.test;
 
-//import java.util.UUID;
-//import org.apache.log4j.*;
-//import java.util.Date;
+import static org.junit.Assert.*;
+
+import org.apache.log4j.Logger;
+import org.junit.Before;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.burritopos.domain.Inventory;
 import junit.framework.AssertionFailedError;
-import junit.framework.TestCase;
-import com.burritopos.service.Factory;
-import com.burritopos.service.IInventorySvc;
+import com.burritopos.service.dao.IInventorySvc;
+import com.burritopos.test.BurritoPOSTestCase;
 
 /**
  * @author james.bloom
  *
  */
-public class InventorySvcImplTestCase extends TestCase {
-	private Factory factory;
+public class InventorySvcImplTestCase extends BurritoPOSTestCase {
 	private Inventory i;
-	//private static Logger dLog = Logger.getLogger(InventorySvcImplTestCase.class);
+	@Autowired
+	private IInventorySvc ics;
+	@SuppressWarnings("unused")
+	private static Logger dLog = Logger.getLogger(InventorySvcImplTestCase.class);
 
-	/* (non-Javadoc)
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	protected void setUp() throws Exception {
-		super.setUp();
-		factory = Factory.getInstance();
-		i = new Inventory(new Integer("1"),50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50);
+	public InventorySvcImplTestCase() {
+		super();
 	}
-
-	/* (non-Javadoc)
-	 * @see junit.framework.TestCase#tearDown()
+	
+	/**
+	 * Sets up the necessary code to run the tests.
+	 *
+	 * @throws Exception if it cannot set up the test.
 	 */
-	protected void tearDown() throws Exception {
-		super.tearDown();
+	@Before
+	public void initCommonResources() throws Exception {
+		super.initCommonResources();
+		
+		i = new Inventory(new Integer("1"),50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50);
 	}
 
 	/**
 	 * Unit Tests for Inventory service
+	 * @throws Exception 
 	 */
-	public void testStoreInventory() throws AssertionFailedError {
-		try {
-			//week 3
-			//IInventorySvc ics = factory.getInventorySvc();
-			
-			//week 4
-			IInventorySvc ics = (IInventorySvc) factory.getService(IInventorySvc.NAME);
-			
-			// First let's store the Inventory
-			assertTrue(ics.storeInventory(i));
-			
-			// Then let's read it back in
-			i = ics.getInventory(i.getId());
-			assertTrue(i.validate());
-			
-			// Update the Inventory
-			i.setCucumberQty(17);
-			i.setGuacamoleQty(1);
-			assertTrue(ics.storeInventory(i));
-			
-			// Finally, let's cleanup the file that was created
-			assertTrue(ics.deleteInventory(i.getId()));
-		}
-		catch(Exception e) {
-			System.out.println("Exception in testStoreInventory: " + e.getMessage());
-			fail(e.getMessage());
-		}
+	@Test
+	public void testStoreInventory() throws AssertionFailedError, Exception {
+		// First let's store the Inventory
+		assertTrue(ics.storeInventory(i));
+
+		// Then let's read it back in
+		i = ics.getInventory(i.getId());
+		assertTrue(i.validate());
+
+		// Update the Inventory
+		i.setCucumberQty(17);
+		i.setGuacamoleQty(1);
+		assertTrue(ics.storeInventory(i));
+
+		// Finally, let's cleanup the file that was created
+		assertTrue(ics.deleteInventory(i.getId()));
 	}
 }

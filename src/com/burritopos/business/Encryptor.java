@@ -1,8 +1,8 @@
 package com.burritopos.business;
 
 import java.security.Key;
+import java.security.NoSuchAlgorithmException;
 import java.security.Security;
-import java.util.Date;
 
 import javax.crypto.KeyGenerator;
 
@@ -16,9 +16,7 @@ import org.bouncycastle.crypto.params.*;
 // A simple example that uses the Bouncy Castle
 // lightweight cryptography API to perform AES
 // encryption of arbitrary data.
-
 public class Encryptor {
-    
 	private static Logger dLog = Logger.getLogger(Encryptor.class);
     private PaddedBufferedBlockCipher cipher;
     private KeyParameter key;
@@ -93,35 +91,31 @@ public class Encryptor {
     }
     
     // Generate random AES Key
-    public static String generateRandomKey(int size) {
+    public static String generateRandomKey(int size) throws NoSuchAlgorithmException {
     	String retVal = "";
     	
-    	try {
-    		if(size != 128 && size != 192 && size != 256)
-    			size = 256;
-    		
-    		// If exception encountered: "JCE cannot authenticate the provider BC"
-    		// need to edit java.security file with this line (where n is next sequential number):
-    		// security.provider.n=org.bouncycastle.jce.provider.BouncyCastleProvider
-    		if(Security.getProvider("BC") == null)
-    			dLog.trace(new Date() + " | BouncyCastleProvider not installed");
-    		else
-    			dLog.trace(new Date() + " | BouncyCastleProvider installed");
-	    	Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
-	    	// removed provider param "BC" for now
-	        KeyGenerator generator = KeyGenerator.getInstance("AES");
-	        generator.init(size);
-	        Key keyToBeWrapped = generator.generateKey();
-	        retVal = new String(keyToBeWrapped.getEncoded());
-    	}
-    	catch(Exception e) {
-    		dLog.error(new Date() + " | Exception in generateRandomKey: "+e.getMessage());
-    	}
+    	if(size != 128 && size != 192 && size != 256)
+    		size = 256;
+
+    	// If exception encountered: "JCE cannot authenticate the provider BC"
+    	// need to edit java.security file with this line (where n is next sequential number):
+    	// security.provider.n=org.bouncycastle.jce.provider.BouncyCastleProvider
+    	if(Security.getProvider("BC") == null)
+    		dLog.trace("BouncyCastleProvider not installed");
+    	else
+    		dLog.trace("BouncyCastleProvider installed");
+    	Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
+    	// removed provider param "BC" for now
+    	KeyGenerator generator = KeyGenerator.getInstance("AES");
+    	generator.init(size);
+    	Key keyToBeWrapped = generator.generateKey();
+    	retVal = new String(keyToBeWrapped.getEncoded());
+	        
         return retVal;
     }
     
     // default random key size to 256 if not provided
-    public static String generateRandomKey() {
+    public static String generateRandomKey() throws NoSuchAlgorithmException {
     	return generateRandomKey(256);
     }
 }

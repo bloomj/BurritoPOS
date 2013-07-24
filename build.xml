@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="BurritoPOSClient" default="testjar" basedir=".">
+<project name="BurritoPOSClient" default="runjar" basedir=".">
 
     <!-- properties are typically defined first -->
     <property name="src.dir" value="${basedir}/src"/>
@@ -7,59 +7,88 @@
     <property name="bin.dir" value="${basedir}/bin"/>
     <property name="build.dir" value="${basedir}/build"/>
     <property name="config.dir" value="${basedir}/config"/>
+    <property name="report.dir" value="${build.dir}/report"/>
 
-	<fileset id="jars" dir="${lib.dir}">
-	  <include name="**/*.jar" />
-	</fileset>
-
-	<path id="cp"> <fileset refid="jars" /> </path>
-	
-    <!-- paths are then defined after the properties -->
+	<!-- paths are then defined after the properties -->
 	<path id="classpath">
-		<pathelement location="${lib.dir}"/>
+		<pathelement location="${lib.dir}\*"/>
+		<pathelement location="${bin.dir}\*"/>
+		<pathelement location="${build.dir}\BurritoPOSclient.jar"/>
 	</path>
-
+	
+    <!-- finally, define the targets that use Ant’s tasks -->
+    <target name="clean" description="deletes and creates the build directory">
+        <delete dir="${build.dir}"/>
+	    <mkdir dir="${build.dir}"/>
+	</target>
+	
 	<target name="compile" depends="clean">
 		<javac srcdir="${src.dir}"
 		         destdir="${build.dir}"
-		         classpathref="cp"
+		         classpathref="classpath"
 		         debug="on"
-		         source="1.6"
+		         source="1.7"
 		  />
-	</target>
-	
-    <!-- finally, define the targets that use Ant’s tasks -->
-    <target name="clean" 
-             description="deletes and creates the build directory">
-        <delete dir="${build.dir}"/>
-	    <mkdir dir="${build.dir}"/>
 	</target>
 
 	<target name="buildjar" depends="clean">
 	    <jar jarfile="${build.dir}/BurritoPOSclient.jar">
-		 <fileset dir="${basedir}">
-		     <include name="config/*"/>
-		 </fileset>
-	      	 <fileset dir="${bin.dir}">
+			<fileset dir="${basedir}">
+			    <include name="config/*"/>
+			</fileset>
+	      	<fileset dir="${bin.dir}">
+	      		<include name="**/applicationContext.xml"/>
+	      		<include name="**/burritopos.properties"/>
+	      		<include name="**/hibernate/*.xml"/>
 	    	    <include name="**/*.class"/>
-	      	 </fileset>
-		 <manifest>
-		    <attribute name="Main-Class" value="com.burritopos.application.NeatoBurrito"/>
-		 </manifest>
+	      	</fileset>
+
+		 	<manifest>
+		    	<attribute name="Main-Class" value="com.burritopos.application.NeatoBurrito"/>
+		 	</manifest>
 	    </jar>
 	    <copy todir="${build.dir}">
 		 <fileset dir="${basedir}">
-	    	     <include name="config*/**/*"/>
+	    	<include name="config*/**/*"/>
 		 </fileset>
 	    </copy>
 	</target>
 
-	<target name="testjar" depends="buildjar">
-	    <java jar="${build.dir}/BurritoPOSclient.jar" fork="yes" dir=".">
-		</java>
-	</target>
+    <target name="junit" depends="buildjar">
+        <mkdir dir="${report.dir}"/>
+        <junit printsummary="yes" haltonfailure="true" enableTestListenerEvents="true">
+            <classpath>
+            	<fileset dir="${lib.dir}" includes="*.jar"/>
+            	<fileset dir="${build.dir}" includes="BurritoPOSclient.jar"/>
+            </classpath>
+        	
+        	<formatter type="plain" usefile="false"/>
+            <formatter type="xml"/>
+            
+        	<!-- Run all Test Cases, ignoring the abstract base class -->
+            <batchtest todir="${report.dir}">
+                <fileset dir="${src.dir}" includes="**/*TestCase.java" excludes="**/*BurritoPOSTestCase.java"/>
+            </batchtest>
+        </junit>
+    </target>
+    
+    <target name="junitreport" depends="junit">
+        <junitreport todir="${report.dir}">
+            <fileset dir="${report.dir}" includes="TEST-*.xml"/>
+            <report todir="${report.dir}/xml"/>
+        	<report format="frames" todir="${report.dir}/html"/>
+        </junitreport>
+    </target>
 
-	<target name="javadoc" depends="compile">
-		<javadoc access="public" author="true" classpath="C:\Program Files\springsource\sts-2.8.1.RELEASE\plugins\org.springframework.roo.wrapping.bcpg-jdk15_1.45.0.0001.jar;C:\Program Files\springsource\sts-2.8.1.RELEASE\plugins\org.springframework.core_3.1.0.RC1.jar;C:\Program Files\springsource\sts-2.8.1.RELEASE\plugins\org.springframework.asm_3.1.0.RC1.jar;C:\Program Files\springsource\sts-2.8.1.RELEASE\plugins\org.springframework.beans_3.1.0.RC1.jar;C:\Jars\hibernate-release-4.0.1.Final\lib\required\hibernate-jpa-2.0-api-1.0.1.Final.jar;C:\Program Files\springsource\sts-2.8.1.RELEASE\plugins\org.springframework.oxm_3.1.0.RC1.jar;C:\Jars\apache-log4j-1.2.16\log4j-1.2.16.jar;C:\Program Files (x86)\eclipse\plugins\org.junit_3.8.2.v3_8_2_v20100427-1100\junit.jar;C:\Program Files\springsource\sts-2.8.1.RELEASE\plugins\org.springframework.orm_3.1.0.RC1.jar;C:\Program Files\springsource\sts-2.8.1.RELEASE\plugins\org.springframework.osgi.io_2.0.0.M2-SNAPSHOT.jar;C:\Jars\hibernate-release-4.0.1.Final\lib\required\javassist-3.15.0-GA.jar;C:\Program Files\springsource\sts-2.8.1.RELEASE\plugins\org.springframework.web.servlet_3.1.0.RC1.jar;C:\Program Files\springsource\sts-2.8.1.RELEASE\plugins\org.springframework.expression_3.1.0.RC1.jar;C:\Program Files\springsource\sts-2.8.1.RELEASE\plugins\org.springframework.jms_3.1.0.RC1.jar;C:\Program Files\springsource\spring-roo-1.1.5.RELEASE\bin\org.springframework.roo.bootstrap-1.1.5.RELEASE.jar;C:\Program Files\springsource\sts-2.8.1.RELEASE\plugins\org.springframework.roo.wrapping.protobuf-java-lite_2.3.0.0001.jar;C:\Jars\hibernate-release-4.0.1.Final\lib\required\jboss-transaction-api_1.1_spec-1.0.0.Final.jar;C:\Jars\hibernate-release-4.0.1.Final\lib\required\dom4j-1.6.1.jar;C:\Jars\hibernate-release-4.0.1.Final\lib\required\commons-collections-3.2.1.jar;C:\Program Files\springsource\sts-2.8.1.RELEASE\plugins\org.springframework.web_3.1.0.RC1.jar;C:\Jars\hibernate-release-4.0.1.Final\lib\required\jboss-logging-3.1.0.CR2.jar;C:\Jars\LegionOfTheBouncyCastle\bcprov-jdk16-146.jar;C:\Program Files\springsource\sts-2.8.1.RELEASE\plugins\org.springframework.uaa.client_1.0.2.BUILD-SNAPSHOT.jar;C:\Program Files\springsource\sts-2.8.1.RELEASE\plugins\org.springframework.context.support_3.1.0.RC1.jar;C:\Program Files\springsource\sts-2.8.1.RELEASE\plugins\org.springframework.jdbc_3.1.0.RC1.jar;C:\Jars\hibernate-release-4.0.1.Final\lib\required\hibernate-core-4.0.1.Final.jar;C:\Jars\mongo-2.7.2.jar;C:\Program Files\springsource\sts-2.8.1.RELEASE\plugins\org.springframework.transaction_3.1.0.RC1.jar;C:\Program Files\springsource\sts-2.8.1.RELEASE\plugins\org.springframework.osgi.core_2.0.0.M2-SNAPSHOT.jar;C:\Program Files\springsource\sts-2.8.1.RELEASE\plugins\org.springframework.context_3.1.0.RC1.jar;C:\Jars\hibernate-release-4.0.1.Final\lib\required\antlr-2.7.7.jar;C:\Program Files\springsource\sts-2.8.1.RELEASE\plugins\org.springframework.aop_3.1.0.RC1.jar;C:\Program Files (x86)\MySQL\MySQL Connector J\mysql-connector-java-5.1.15-bin.jar;C:\Jars\commons-logging-1.1.1\commons-logging-1.1.1.jar;C:\Program Files\springsource\sts-2.8.1.RELEASE\plugins\org.springframework.roo.wrapping.json-simple_1.1.0.0010.jar;C:\Program Files\springsource\vfabric-tc-server-developer-2.6.1.RELEASE\lib\com.springsource.org.apache.commons.cli-1.2.0.jar;C:\Program Files\springsource\sts-2.8.1.RELEASE\plugins\org.springframework.roo.wrapping.bcprov-jdk15_1.45.0.0001.jar;C:\Jars\hibernate-release-4.0.1.Final\lib\required\hibernate-commons-annotations-4.0.1.Final.jar" destdir="doc" doctitle="Burrito Point of Service" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="com.burritopos.application.test,com.burritopos.domain.test,com.burritopos.service,com.burritopos.application,com.burritopos.service.test,com.burritopos.exception,com.burritopos.business.test,com.burritopos,com.burritopos.presentation,com.burritopos.domain,com.burritopos.business" source="1.6" sourcepath="src" splitindex="true" use="true" version="true" executable="C:\Program Files (x86)\Java\jdk1.6.0_25\bin\javadoc.exe"/>
+	<target name="javadoc" depends="junitreport">
+		<javadoc access="public" author="true" destdir="doc" classpath="${lib.dir}\*" doctitle="Burrito Point of Service" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="com.burritopos.*" source="1.7" sourcepath="src" splitindex="true" use="true" version="true" executable="C:\Program Files (x86)\Java\jdk1.7.0_11\bin\javadoc.exe"/>
+	</target>
+	
+	<target name="runjar" depends="javadoc">
+	    <java classname="com.burritopos.application.NeatoBurrito" fork="yes">
+            <classpath>
+                <path refid="classpath"/>
+            </classpath>
+	    </java>
 	</target>
 </project>

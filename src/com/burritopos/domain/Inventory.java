@@ -9,9 +9,6 @@ import org.apache.log4j.*;
 
 import com.burritopos.exception.InsufficientInventoryException;
 
-import java.util.Date;
-
-
 /**
  * @author james.bloom
  * This class should be thread safe so Inventory can be tracked without error.  To that
@@ -175,7 +172,8 @@ public class Inventory implements Serializable {
 			setOnionQty(OnionQty);	
 		}
 		catch(InsufficientInventoryException e) {
-			dLog.error(new Date() + " | Exception in Inventory: "+e.getMessage());
+			dLog.error("Exception in Inventory: "+e.getMessage());
+			e.printStackTrace();
 		}
 	}
 

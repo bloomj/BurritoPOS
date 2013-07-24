@@ -26,8 +26,6 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import org.apache.log4j.*;
-import java.util.Date;
-import org.springframework.context.*;
 import org.springframework.context.support.*;
 
 import com.burritopos.business.OrderManager;
@@ -60,13 +58,27 @@ public class OrderViewUI extends JInternalFrame {
 	private OrderManager oManager;
 	private ArrayList<Order> tOrders;
 
+	// Spring configuration
+	private static final String SPRING_CONFIG_DEFAULT = "applicationContext.xml";
+
 	// Order View constructor
 	public OrderViewUI (String name) throws ServiceLoadException, Exception {
 		super(name);
 
 		//initialize OrderManager
-		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] {"spring.cfg.xml"});
-		oManager = (OrderManager)context.getBean("OrderManager");
+		//Spring Framework IoC
+		ClassPathXmlApplicationContext beanfactory = null;
+		try {
+			beanfactory = new ClassPathXmlApplicationContext(SPRING_CONFIG_DEFAULT);
+			oManager = (OrderManager)beanfactory.getBean("OrderManager");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (beanfactory != null) {
+				beanfactory.close();
+			}
+		}
 		//oManager = new OrderManager();
 
 		// layout the Login UI look & feel here
@@ -109,15 +121,16 @@ public class OrderViewUI extends JInternalFrame {
 
 		// add all Ordering orders
 		try {
-			dLog.trace(new Date() + " | getting history");
+			dLog.trace("Getting history");
 			tOrders = oManager.getOrderHistories();
 			for(int n=0; n<tOrders.size(); n++) {
-				dLog.trace(new Date() + " | order: " + n);
+				dLog.trace("On order: " + n);
 				model.addRow(new Object[]{model.getRowCount()+1,tOrders.get(n).getOrderDate(),tOrders.get(n).getBurritos().size(),tOrders.get(n).getIsSubmitted(),tOrders.get(n).getIsComplete(),tOrders.get(n).getTotalCost()});
 			}
 		}
 		catch(Exception e) {
-			dLog.error(new Date() + " | Error in getting history: " + e.getMessage());
+			dLog.error("Error in getting history: " + e.getMessage());
+			e.printStackTrace();
 		}
 
 		updateTotalSales();
@@ -136,7 +149,7 @@ public class OrderViewUI extends JInternalFrame {
 
 				public void valueChanged(ListSelectionEvent e) {
 					if (!e.getValueIsAdjusting()) {  
-						dLog.trace(new Date() + " | Currently selected Row: " + orderList.getSelectedRow());
+						dLog.trace("Currently selected Row: " + orderList.getSelectedRow());
 					}
 				}
 
@@ -183,7 +196,7 @@ public class OrderViewUI extends JInternalFrame {
 	}
 
 	public void deleteOrderBtnOnClick() {
-		dLog.trace(new Date() + " | Delete Order button has been clicked");
+		dLog.trace("Delete Order button has been clicked");
 
 		try {
 			if(orderList.getSelectedRow() != -1) {
@@ -192,46 +205,43 @@ public class OrderViewUI extends JInternalFrame {
 					tOrders = oManager.getOrderHistories();
 					updateTotalSales();
 				}
-				else
-					dLog.trace(new Date() + " | Unable to remove burrito");
+				else {
+					dLog.trace("Unable to remove burrito");
+				}
 			}
 		}
 		catch(Exception e) {
-			dLog.error(new Date() + " | Exception in deleteOrderBtnOnClick: "+e.getMessage());
+			dLog.error("Exception in deleteOrderBtnOnClick: "+e.getMessage());
+			e.printStackTrace();
 		}
 	}
 
 	public void exitBtnOnClick() {
-		dLog.trace(new Date() + " | Exit button has been clicked");
+		dLog.trace("Exit button has been clicked");
 
-		try {
-
-		}
-		catch(Exception e) {
-			dLog.error(new Date() + " | Exception in exitBtnOnClick: "+e.getMessage());
-		}
-
-		dLog.trace(new Date() + " | Closing Order History Form");
+		dLog.trace("Closing Order History Form");
 		dispose();
 	}
 
 	private void updateTotalSales() {
-		dLog.trace(new Date() + " | Updating Total Sales");
+		dLog.trace("Updating Total Sales");
 
 		try {
 			BigDecimal totalSales = new BigDecimal("0");
 
 			for(int n=0; n<tOrders.size(); n++) {
-				dLog.trace(new Date() + " | Order: " + n + " | Total Sales: $" + tOrders.get(n).getTotalCost());
-				if(tOrders.get(n).getTotalCost() != null)
+				dLog.trace("Order: " + n + " | Total Sales: $" + tOrders.get(n).getTotalCost());
+				if(tOrders.get(n).getTotalCost() != null) {
 					totalSales = totalSales.add(tOrders.get(n).getTotalCost());
+				}
 			}
 
-			dLog.trace(new Date() + " | Total Sales: $" + totalSales);
+			dLog.trace("Total Sales: $" + totalSales);
 			priceLbl.setText("Total Sales: $" + totalSales);
 		}
 		catch(Exception e) {
-			dLog.error(new Date() + " | Exception in updateTotalCost: "+e.getMessage());
+			dLog.error("Exception in updateTotalCost: "+e.getMessage());
+			e.printStackTrace();
 		}
 	}
 }

@@ -3,88 +3,77 @@
  */
 package com.burritopos.service.test;
 
-//import java.util.UUID;
-//import org.apache.log4j.*;
-//import java.util.Date;
+import static org.junit.Assert.*;
+
+import org.apache.log4j.Logger;
+import org.junit.Before;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.burritopos.domain.Customer;
 
 import junit.framework.AssertionFailedError;
-import junit.framework.TestCase;
-import com.burritopos.service.Factory;
-import com.burritopos.service.ICustomerSvc;
+import com.burritopos.service.dao.ICustomerSvc;
+import com.burritopos.test.BurritoPOSTestCase;
 
 /**
  * @author james.bloom
  *
  */
-public class CustomerSvcImplTestCase extends TestCase {
-	private Factory factory;
+public class CustomerSvcImplTestCase extends BurritoPOSTestCase {
 	private Customer c;
-	//private static Logger dLog = Logger.getLogger(CustomerSvcImplTestCase.class);
+	@Autowired
+	private ICustomerSvc ics;
+	@SuppressWarnings("unused")
+	private static Logger dLog = Logger.getLogger(CustomerSvcImplTestCase.class);
 
-	/* (non-Javadoc)
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	protected void setUp() throws Exception {
-		super.setUp();
-		factory = Factory.getInstance();
-		c = new Customer(new Integer("1"),"Jim","Bloom","jim@gmail.com");
+	public CustomerSvcImplTestCase() {
+		super();
 	}
-
-	/* (non-Javadoc)
-	 * @see junit.framework.TestCase#tearDown()
+	
+	/**
+	 * Sets up the necessary code to run the tests.
+	 *
+	 * @throws Exception if it cannot set up the test.
 	 */
-	protected void tearDown() throws Exception {
-		super.tearDown();
+	@Before
+	public void initCommonResources() throws Exception {
+		super.initCommonResources();
+		
+		c = new Customer(new Integer("1"),"Jim","Bloom","jim@gmail.com");
 	}
 
 	/**
 	 * Unit Tests for Customer service
+	 * @throws Exception 
 	 */
-	public void testCustomerSvc() throws AssertionFailedError {
-		try {
-			//week 3
-			//ICustomerSvc ics = factory.getCustomerSvc();
+	@Test
+	public void testCustomerSvc() throws AssertionFailedError, Exception { 
+		// First let's store the Customer
+		assertTrue(ics.storeCustomer(c));
 
-			//week 4
-			ICustomerSvc ics = (ICustomerSvc) factory.getService(ICustomerSvc.NAME); 
+		// Then let's read it back in
+		c = ics.getCustomer(c.getId());
+		assertTrue(c.validate());
 
-			// First let's store the Customer
-			assertTrue(ics.storeCustomer(c));
+		// Update the Customer
+		c.setLastName("Smith");
+		assertTrue(ics.storeCustomer(c));
 
-			// Then let's read it back in
-			c = ics.getCustomer(c.getId());
-			assertTrue(c.validate());
-			
-			// Update the Customer
-			c.setLastName("Smith");
-			assertTrue(ics.storeCustomer(c));
-
-			// Finally, let's cleanup the file that was created
-			assertTrue(ics.deleteCustomer(c.getId()));
-		}
-		catch(Exception e) {
-			System.out.println("Exception in testStoreCustomer: " + e.getMessage());
-			fail(e.getMessage());
-		}
+		// Finally, let's cleanup the file that was created
+		assertTrue(ics.deleteCustomer(c.getId()));
 	}
 
-	public void testInvalidGetCustomer() throws AssertionFailedError {
-		try {
-			//week 3
-			//ICustomerSvc ics = factory.getCustomerSvc();
+	/**
+	 * Unit Tests for invalid Customer get
+	 * @throws AssertionFailedError
+	 * @throws NumberFormatException
+	 * @throws Exception
+	 */
+	public void testInvalidGetCustomer() throws AssertionFailedError, NumberFormatException, Exception {
+		c = ics.getCustomer(new Integer("1234"));
 
-			//week 4
-			ICustomerSvc ics = (ICustomerSvc) factory.getService(ICustomerSvc.NAME);
-			c = ics.getCustomer(new Integer("1234"));
-
-			if(c != null)
-				assertFalse(c.validate());
-		}
-		catch(Exception e) {
-			System.out.println("Exception in testInvalidGetCustomer: " + e.getMessage());
-			fail(e.getMessage());			
-		}
+		if(c != null)
+			assertFalse(c.validate());
 	}
 }

@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
 //import java.util.UUID;
-//import org.apache.log4j.*;
-//import java.util.Date;
+
+import org.apache.log4j.Logger;
 
 /**
  * @author james.bloom
@@ -21,7 +21,7 @@ public class Order implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 7591015289324685131L;
-    //private static Logger dLog = Logger.getLogger(Order.class);
+    private static Logger dLog = Logger.getLogger(Order.class);
 	private Integer orderID;
 	//changing a generic array out for an ArrayList here to dynamically and easily add/subtract the burritos
 	//don't need Vector because Orders will not need to by synchronized (i.e. only one person should be modifying at a time)
@@ -67,7 +67,7 @@ public class Order implements Serializable {
 	 * @return success or failure
 	 */
 	public boolean validate() {
-        System.out.println(new Date() + "[Burrito][Validate] | orderID: " + this.orderID + " | burritos: " + this.burritos.size() + " | isSubmitted: " + this.isSubmitted + " | isComplete: " + this.isComplete + " | totalCost: " + this.totalCost);
+        dLog.trace("[Order][Validate] | orderID: " + this.orderID + " | burritos: " + this.burritos.size() + " | isSubmitted: " + this.isSubmitted + " | isComplete: " + this.isComplete + " | totalCost: " + this.totalCost + " | orderDate: " + this.orderDate);
 		if(this.orderID != null && this.burritos != null && this.orderDate != null && this.isSubmitted != null && this.isComplete != null && this.totalCost != null)
 			return true;
 		else

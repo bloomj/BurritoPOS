@@ -11,7 +11,6 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
-
 import org.apache.log4j.*;
 import java.util.Date;
 
@@ -19,7 +18,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.UUID;
 import java.util.Random;
 import org.springframework.context.*;
@@ -65,21 +63,34 @@ public class OrderUI extends JInternalFrame {
 	private Order newOrder;
 	private InventoryManager iManager;
 	private Inventory curInventory;
+    
+	// Spring configuration
+    private static final String SPRING_CONFIG_DEFAULT = "applicationContext.xml";
 	
 	// Order constructor
 	public OrderUI (String name, Inventory i) throws ServiceLoadException, Exception {
 		super(name);
 
 		//initialize InventoryManager
-        ApplicationContext context = new ClassPathXmlApplicationContext(new String[] {"spring.cfg.xml"});
-        iManager = (InventoryManager)context.getBean("InventoryManager");
-		//iManager = new InventoryManager();
+        //Spring Framework IoC
+        ClassPathXmlApplicationContext beanfactory = null;
+        try {
+            beanfactory = new ClassPathXmlApplicationContext(SPRING_CONFIG_DEFAULT);
+            iManager = (InventoryManager)beanfactory.getBean("InventoryManager");
+            oManager = (OrderManager)beanfactory.getBean("OrderManager");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (beanfactory != null) {
+                beanfactory.close();
+            }
+        }
+        
 		curInventory = i;
-		
-		//initialize OrderManager
+
         Random rand = new Random();
-        oManager = (OrderManager)context.getBean("OrderManager");
-		//oManager = new OrderManager();
+
 		newOrder = new Order(rand.nextInt(),new ArrayList<Burrito>(),new Date(),false,false,new BigDecimal("0.00"));
 		bDialog = new BurritoDialog(javax.swing.JOptionPane.getFrameForComponent(this), "New Burrito", true, curInventory);
 		
@@ -156,7 +167,7 @@ public class OrderUI extends JInternalFrame {
 
 			public void valueChanged(ListSelectionEvent e) {
 				if (!e.getValueIsAdjusting()) {  
-					dLog.trace(new Date() + " | Currently selected Row: " + burritoList.getSelectedRow());
+					dLog.trace("Currently selected Row: " + burritoList.getSelectedRow());
 				}
 			}
 			
@@ -207,7 +218,7 @@ public class OrderUI extends JInternalFrame {
 
 	// private methods
 	private void addBurritoBtnOnClick() {
-		dLog.trace(new Date() + " | Add Burrito button has been clicked");
+		dLog.trace("Add Burrito button has been clicked");
 		
 		try {
 			bDialog.clearState(curInventory);
@@ -223,17 +234,19 @@ public class OrderUI extends JInternalFrame {
 					//update cost
 					updateTotalCost();
 				}
-				else
-					dLog.trace(new Date() + " | Unable to add burrito");
+				else {
+					dLog.trace("Unable to add burrito");
+				}
 			}	
 		}
 		catch(Exception e) {
-			dLog.error(new Date() + " | Exception in addBurritoBtnOnClick: "+e.getMessage());
+			dLog.error("Exception in addBurritoBtnOnClick: "+e.getMessage());
+			e.printStackTrace();
 		}
 	}
 
 	private void editBurritoBtnOnClick() {
-		dLog.trace(new Date() + " | Edit Burrito button has been clicked");
+		dLog.trace("Edit Burrito button has been clicked");
 		
 		try {
 			if(burritoList.getSelectedRow() != -1) {
@@ -257,18 +270,20 @@ public class OrderUI extends JInternalFrame {
 						//update cost
 						updateTotalCost();
 					}
-					else
-						dLog.trace(new Date() + " | Unable to edit burrito");
+					else {
+						dLog.trace("Unable to edit burrito");
+					}
 				}	
 			}
 		}
 		catch(Exception e) {
-			dLog.error(new Date() + " | Exception in editBurritoBtnOnClick: "+e.getMessage());
+			dLog.error("Exception in editBurritoBtnOnClick: "+e.getMessage());
+			e.printStackTrace();
 		}
 	}
 	
 	private void remBurritoBtnOnClick() {
-		dLog.trace(new Date() + " | Remove Burrito button has been clicked");
+		dLog.trace("Remove Burrito button has been clicked");
 		
 		try {
 			if(burritoList.getSelectedRow() != -1) {
@@ -287,17 +302,19 @@ public class OrderUI extends JInternalFrame {
 					//update cost
 					updateTotalCost();
 				}
-				else
-					dLog.trace(new Date() + " | Unable to remove burrito");
+				else {
+					dLog.trace("Unable to remove burrito");
+				}
 			}
 		}
 		catch(Exception e) {
-			dLog.error(new Date() + " | Exception in remBurritoBtnOnClick: "+e.getMessage());
+			dLog.error("Exception in remBurritoBtnOnClick: "+e.getMessage());
+			e.printStackTrace();
 		}
 	}
 	
 	private void submitBtnOnClick() {
-		dLog.trace(new Date() + " | Order submit button has been clicked");
+		dLog.trace("Order submit button has been clicked");
 		
 		try {
 			if(newOrder.getTotalCost().compareTo(new BigDecimal("0")) != 1) {
@@ -308,39 +325,43 @@ public class OrderUI extends JInternalFrame {
 				newOrder.setIsSubmitted(true);
 				
 				if(oManager.updateOrder(newOrder)) { 
-					dLog.trace(new Date() + " | Closing Order Creation Form");
+					dLog.trace("Closing Order Creation Form");
 					dispose();
 				}
 			}
 		}
 		catch(Exception e) {
-			dLog.error(new Date() + " | Exception in submitBtnOnClick: "+e.getMessage());
+			dLog.error("Exception in submitBtnOnClick: "+e.getMessage());
+			e.printStackTrace();
 		}
 	}
 	
 	private void cancelBtnOnClick() {
-		dLog.trace(new Date() + " | Order cancel button has been clicked");
+		dLog.trace("Order cancel button has been clicked");
 
 		if(JOptionPane.showConfirmDialog(OrderUI.this, "Are you sure you want to cancel this order?", "Warning", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION) {
 			try {
 				//return ingredients back to inventory
-				for(int n=0; n<newOrder.getBurritos().size(); n++)
+				for(int n=0; n<newOrder.getBurritos().size(); n++) {
 					iManager.returnToInventory(curInventory, newOrder.getBurritos().get(n));
+				}
+				
 				iManager.updateInventory(curInventory);
 				
 				// cancel any order that was created up to this point
 				if(oManager.cancelOrder(newOrder)) {
-					dLog.trace(new Date() + " | Successfully cancelled order #: " + newOrder.getOrderID());
+					dLog.trace("Successfully cancelled order #: " + newOrder.getOrderID());
 				}
 				else {
-					dLog.trace(new Date() + " | Failed to cancelled order #: " + newOrder.getOrderID());
+					dLog.trace("Failed to cancelled order #: " + newOrder.getOrderID());
 				}
 			}
 			catch(Exception e) {
-				dLog.error(new Date() + " | Exception in cancelBtnOnClick: "+e.getMessage());
+				dLog.error("Exception in cancelBtnOnClick: "+e.getMessage());
+				e.printStackTrace();
 			}
 			
-			dLog.trace(new Date() + " | Closing Order Creation Form");
+			dLog.trace("Closing Order Creation Form");
 			dispose();
 		}
 	}
@@ -351,7 +372,8 @@ public class OrderUI extends JInternalFrame {
 			priceLbl.setText("Total Price: $" + newOrder.getTotalCost());
 		}
 		catch(Exception e) {
-			dLog.error(new Date() + " | Exception in updateTotalCost: "+e.getMessage());
+			dLog.error("Exception in updateTotalCost: "+e.getMessage());
+			e.printStackTrace();
 		}
 	}
 }

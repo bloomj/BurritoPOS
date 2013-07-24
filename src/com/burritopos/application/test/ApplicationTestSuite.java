@@ -1,23 +1,28 @@
 package com.burritopos.application.test;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 
-public class ApplicationTestSuite extends TestCase {
+@RunWith(Suite.class)
+@SuiteClasses({
+	com.burritopos.domain.test.AllTests.class,
+	com.burritopos.service.test.AllTests.class,
+	com.burritopos.business.test.AllTests.class,
+    })
+public class ApplicationTestSuite {
 
-	public ApplicationTestSuite(String name) {
-		super(name);
-	}
+    @BeforeClass
+    public static void setUpClass() {
+        System.out.println("Master setup");
 
-	public static Test suite() {
-		TestSuite suite = new TestSuite("Test for Burrito POS");
-		//$JUnit-BEGIN$
-		suite.addTest(com.burritopos.domain.test.AllTests.suite());
-		suite.addTest(com.burritopos.service.test.AllTests.suite());
-		suite.addTest(com.burritopos.business.test.AllTests.suite());
-		//$JUnit-END$
-		return suite;
-	}
+    }
+
+    @AfterClass
+    public static void tearDownClass() {
+        System.out.println("Master tearDown");
+    }
 
 }

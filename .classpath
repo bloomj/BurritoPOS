@@ -1,44 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/>
-	<classpathentry kind="lib" path="C:/Jars/apache-log4j-1.2.16/log4j-1.2.16.jar"/>
-	<classpathentry kind="lib" path="C:/Jars/hibernate-release-4.0.1.Final/lib/required/hibernate-core-4.0.1.Final.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/springsource/spring-roo-1.1.5.RELEASE/bin/org.springframework.roo.bootstrap-1.1.5.RELEASE.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/springsource/vfabric-tc-server-developer-2.6.1.RELEASE/lib/com.springsource.org.apache.commons.cli-1.2.0.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/springsource/sts-2.8.1.RELEASE/plugins/org.springframework.context_3.1.0.RC1.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/springsource/sts-2.8.1.RELEASE/plugins/org.springframework.aop_3.1.0.RC1.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/springsource/sts-2.8.1.RELEASE/plugins/org.springframework.asm_3.1.0.RC1.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/springsource/sts-2.8.1.RELEASE/plugins/org.springframework.beans_3.1.0.RC1.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/springsource/sts-2.8.1.RELEASE/plugins/org.springframework.context.support_3.1.0.RC1.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/springsource/sts-2.8.1.RELEASE/plugins/org.springframework.core_3.1.0.RC1.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/springsource/sts-2.8.1.RELEASE/plugins/org.springframework.expression_3.1.0.RC1.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/springsource/sts-2.8.1.RELEASE/plugins/org.springframework.jdbc_3.1.0.RC1.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/springsource/sts-2.8.1.RELEASE/plugins/org.springframework.jms_3.1.0.RC1.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/springsource/sts-2.8.1.RELEASE/plugins/org.springframework.orm_3.1.0.RC1.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/springsource/sts-2.8.1.RELEASE/plugins/org.springframework.osgi.core_2.0.0.M2-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/springsource/sts-2.8.1.RELEASE/plugins/org.springframework.osgi.io_2.0.0.M2-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/springsource/sts-2.8.1.RELEASE/plugins/org.springframework.oxm_3.1.0.RC1.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/springsource/sts-2.8.1.RELEASE/plugins/org.springframework.roo.wrapping.bcpg-jdk15_1.45.0.0001.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/springsource/sts-2.8.1.RELEASE/plugins/org.springframework.roo.wrapping.bcprov-jdk15_1.45.0.0001.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/springsource/sts-2.8.1.RELEASE/plugins/org.springframework.roo.wrapping.json-simple_1.1.0.0010.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/springsource/sts-2.8.1.RELEASE/plugins/org.springframework.roo.wrapping.protobuf-java-lite_2.3.0.0001.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/springsource/sts-2.8.1.RELEASE/plugins/org.springframework.transaction_3.1.0.RC1.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/springsource/sts-2.8.1.RELEASE/plugins/org.springframework.uaa.client_1.0.2.BUILD-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/springsource/sts-2.8.1.RELEASE/plugins/org.springframework.web.servlet_3.1.0.RC1.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/springsource/sts-2.8.1.RELEASE/plugins/org.springframework.web_3.1.0.RC1.jar"/>
-	<classpathentry kind="lib" path="C:/Jars/commons-logging-1.1.1/commons-logging-1.1.1.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files (x86)/MySQL/MySQL Connector J/mysql-connector-java-5.1.15-bin.jar"/>
-	<classpathentry kind="lib" path="C:/Jars/LegionOfTheBouncyCastle/bcprov-jdk16-146.jar"/>
-	<classpathentry kind="lib" path="C:/Jars/hibernate-release-4.0.1.Final/lib/required/antlr-2.7.7.jar"/>
-	<classpathentry kind="lib" path="C:/Jars/hibernate-release-4.0.1.Final/lib/required/commons-collections-3.2.1.jar"/>
-	<classpathentry kind="lib" path="C:/Jars/hibernate-release-4.0.1.Final/lib/required/dom4j-1.6.1.jar"/>
-	<classpathentry kind="lib" path="C:/Jars/hibernate-release-4.0.1.Final/lib/required/hibernate-commons-annotations-4.0.1.Final.jar"/>
-	<classpathentry kind="lib" path="C:/Jars/hibernate-release-4.0.1.Final/lib/required/hibernate-jpa-2.0-api-1.0.1.Final.jar"/>
-	<classpathentry kind="lib" path="C:/Jars/hibernate-release-4.0.1.Final/lib/required/javassist-3.15.0-GA.jar"/>
-	<classpathentry kind="lib" path="C:/Jars/hibernate-release-4.0.1.Final/lib/required/jboss-logging-3.1.0.CR2.jar"/>
-	<classpathentry kind="lib" path="C:/Jars/hibernate-release-4.0.1.Final/lib/required/jboss-transaction-api_1.1_spec-1.0.0.Final.jar"/>
-	<classpathentry kind="lib" path="C:/Jars/mongo-2.7.2.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="lib/bcprov-jdk16-146.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/hibernate-core-4.0.1.Final.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-1.2.16.jar"/>
+	<classpathentry kind="lib" path="lib/mongo-2.7.2.jar"/>
+	<classpathentry kind="lib" path="lib/spring-aop-3.2.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-aspects-3.2.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-beans-3.2.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-context-3.2.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-core-3.2.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-expression-3.2.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-instrument-3.2.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-jdbc-3.2.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-orm-3.2.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-struts-3.2.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-test-3.2.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-tx-3.2.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/junit.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

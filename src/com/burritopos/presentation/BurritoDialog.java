@@ -23,16 +23,12 @@ import javax.swing.JOptionPane;
 import javax.swing.border.LineBorder;
 
 import org.apache.log4j.*;
-import java.util.Date;
 import java.util.Random;
-import org.springframework.context.*;
 import org.springframework.context.support.*;
 
 import com.burritopos.business.BurritoManager;
 import com.burritopos.domain.Burrito;
 import com.burritopos.domain.Inventory;
-
-
 
 /**
  * @author james.bloom
@@ -86,6 +82,9 @@ public class BurritoDialog extends JDialog {
 	private int addResult;
 	private Inventory curInventory;
     private Random rand;
+    
+	// Spring configuration
+    private static final String SPRING_CONFIG_DEFAULT = "applicationContext.xml";
 	
 	// Order constructor
 	public BurritoDialog (Frame owner, String name, boolean modal, Inventory i) throws Exception {
@@ -94,8 +93,18 @@ public class BurritoDialog extends JDialog {
         rand = new Random();
         
         //Spring Framework IoC
-        ApplicationContext context = new ClassPathXmlApplicationContext(new String[] {"spring.cfg.xml"});
-		bManager = (BurritoManager)context.getBean("BurritoManager");
+        ClassPathXmlApplicationContext beanfactory = null;
+        try {
+            beanfactory = new ClassPathXmlApplicationContext(SPRING_CONFIG_DEFAULT);
+    		bManager = (BurritoManager)beanfactory.getBean("BurritoManager");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (beanfactory != null) {
+                beanfactory.close();
+            }
+        }
        
 		//bManager = new BurritoManager();
 		newBurrito = new Burrito(rand.nextInt(),false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,new BigDecimal("0.00"));
@@ -591,13 +600,14 @@ public class BurritoDialog extends JDialog {
 				whiteRiceChk.setEnabled(false);
 		}
 		catch(Exception e) {
-			dLog.error(new Date() + " | Exception in initAvailableOptions: "+e.getMessage());
+			dLog.error("Exception in initAvailableOptions: "+e.getMessage());
+			e.printStackTrace();
 		}
 	}
 	
 	private void constrainTort(String type) {
 		try {
-			dLog.trace(new Date() + " | constraining tortilla | type " + type);
+			dLog.trace("Constraining tortilla | type " + type);
 			
 			if(type == "Flour" && flourTortChk.getState()) {
 				wheatTortChk.setEnabled(false);
@@ -658,18 +668,20 @@ public class BurritoDialog extends JDialog {
 			}
 		}
 		catch(Exception e) {
-			dLog.error(new Date() + " | Exception in constrainTort: "+e.getMessage());
+			dLog.error("Exception in constrainTort: "+e.getMessage());
+			e.printStackTrace();
 		}
 	}
 	
 	private void updateBurritoCost() {
 		try {
-			dLog.trace(new Date() + " | updating burrito cost");
+			dLog.trace("Updating burrito cost");
 			newBurrito.setPrice(bManager.calculatePrice(newBurrito));
 			priceLbl.setText("Total Price: $" + newBurrito.getPrice());
 		}
 		catch(Exception e) {
-			dLog.error(new Date() + " | Exception in updateBurritoCost: "+e.getMessage());
+			dLog.error("Exception in updateBurritoCost: "+e.getMessage());
+			e.printStackTrace();
 		}
 	}
 	
@@ -744,7 +756,8 @@ public class BurritoDialog extends JDialog {
 			updateBurritoCost();
 		}
 		catch(Exception e) {
-			dLog.error(new Date() + " | Exception in setBurrito: "+e.getMessage());
+			dLog.error("Exception in setBurrito: "+e.getMessage());
+			e.printStackTrace();
 		}
 	}
 	

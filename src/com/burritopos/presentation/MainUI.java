@@ -4,14 +4,12 @@
 package com.burritopos.presentation;
 
 import javax.swing.*;
-import java.util.Date;
 
 import java.awt.*;
 import java.awt.event.*;
 //import java.util.UUID;
 import org.apache.log4j.*;
 import java.util.Random;
-import org.springframework.context.*;
 import org.springframework.context.support.*;
 
 import com.burritopos.business.InventoryManager;
@@ -33,26 +31,39 @@ public class MainUI extends JFrame {
 	private JMenuBar menubar = new JMenuBar();
 	private Inventory i = new Inventory(new Integer("1"),50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50);
 	private InventoryManager iManager;
+    
+	// Spring configuration
+    private static final String SPRING_CONFIG_DEFAULT = "applicationContext.xml";
 	
 	public MainUI() {
 		super("Neato Burrito");
 
-        dLog.trace(new Date() + " | In MainUI: " + MainUI.class.getCanonicalName());
+        dLog.trace("In MainUI: " + MainUI.class.getCanonicalName());
 		try {
             Random rand = new Random();
             i.setId(rand.nextInt());
             
             //Spring Framework IoC
-            ApplicationContext context = new ClassPathXmlApplicationContext(new String[] {"spring.cfg.xml"});
-            iManager = (InventoryManager)context.getBean("InventoryManager");
+            ClassPathXmlApplicationContext beanfactory = null;
+            try {
+                beanfactory = new ClassPathXmlApplicationContext(SPRING_CONFIG_DEFAULT);
+                iManager = (InventoryManager)beanfactory.getBean("InventoryManager");
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (beanfactory != null) {
+                    beanfactory.close();
+                }
+            }
 			
             //Factory Pattern
             //iManager = new InventoryManager();
 			iManager.createInventory(i);
 		}
 		catch(Exception e) {
-			dLog.error(new Date() + " | Unable to create Inventory: "+e.getMessage());
-            dLog.trace(new Date() + " | Stack Trace: "+e.getStackTrace().toString());
+			dLog.error("Unable to create Inventory: "+e.getMessage());
+            e.printStackTrace();
 		}
 		
 		this.setBounds(0, 0, 500, 500);
@@ -85,10 +96,12 @@ public class MainUI extends JFrame {
 					theDesktop.add(caUI); 	
 				}
 				catch(ServiceLoadException e1) {
-					dLog.error(new Date() + " | Exception in Create Order: "+e1.getMessage());
+					dLog.error("Exception in Create Order: "+e1.getMessage());
+					e1.printStackTrace();
 				}
 				catch(Exception e2) {
-					dLog.error(new Date() + " | Exception in calculateTotal: "+e2.getMessage());
+					dLog.error("Exception in calculateTotal: "+e2.getMessage());
+					e2.printStackTrace();
 				}
 			}
 		});
@@ -108,10 +121,12 @@ public class MainUI extends JFrame {
 					theDesktop.add(iUI); 	
 				}
 				catch(ServiceLoadException e1) {
-					dLog.error(new Date() + " | Exception in View Inventory: "+e1.getMessage());
+					dLog.error("Exception in View Inventory: "+e1.getMessage());
+					e1.printStackTrace();
 				}
 				catch(Exception e2) {
-					dLog.error(new Date() + " | Exception in View Inventory: "+e2.getMessage());
+					dLog.error("Exception in View Inventory: "+e2.getMessage());
+					e2.printStackTrace();
 				}
 			}
 		});
@@ -128,10 +143,12 @@ public class MainUI extends JFrame {
 					theDesktop.add(ovUI); 	
 				}
 				catch(ServiceLoadException e1) {
-					dLog.error(new Date() + " | Exception in View Order History: "+e1.getMessage());
+					dLog.error("Exception in View Order History: "+e1.getMessage());
+					e1.printStackTrace();
 				}
 				catch(Exception e2) {
-					dLog.error(new Date() + " | Exception in View Order History: "+e2.getMessage());
+					dLog.error("Exception in View Order History: "+e2.getMessage());
+					e2.printStackTrace();
 				}
 			}
 		});

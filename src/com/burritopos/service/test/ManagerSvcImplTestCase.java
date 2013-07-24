@@ -3,70 +3,63 @@
  */
 package com.burritopos.service.test;
 
-//import java.util.UUID;
-//import org.apache.log4j.*;
-//import java.util.Date;
+import static org.junit.Assert.*;
+
+import org.apache.log4j.Logger;
+import org.junit.Before;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.burritopos.domain.Manager;
 import junit.framework.AssertionFailedError;
-import junit.framework.TestCase;
-import com.burritopos.service.Factory;
-import com.burritopos.service.IManagerSvc;
+import com.burritopos.service.dao.IManagerSvc;
+import com.burritopos.test.BurritoPOSTestCase;
 
 /**
  * @author james.bloom
  *
  */
-public class ManagerSvcImplTestCase extends TestCase {
-	private Factory factory;
+public class ManagerSvcImplTestCase extends BurritoPOSTestCase {
 	private Manager m;
+	@Autowired
+	private IManagerSvc ics;
+	@SuppressWarnings("unused")
+	private static Logger dLog = Logger.getLogger(ManagerSvcImplTestCase.class);
 
-    //private static Logger dLog = Logger.getLogger(ManagerSvcImplTestCase.class);
-
-	/* (non-Javadoc)
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	protected void setUp() throws Exception {
-		super.setUp();
-		factory = Factory.getInstance();
-		m = new Manager("Jim","Bloom",new Integer("1"));
+	public ManagerSvcImplTestCase() {
+		super();
 	}
-
-	/* (non-Javadoc)
-	 * @see junit.framework.TestCase#tearDown()
+	
+	/**
+	 * Sets up the necessary code to run the tests.
+	 *
+	 * @throws Exception if it cannot set up the test.
 	 */
-	protected void tearDown() throws Exception {
-		super.tearDown();
+	@Before
+	public void initCommonResources() throws Exception {
+		super.initCommonResources();
+		
+		m = new Manager("Jim","Bloom",new Integer("1"));
 	}
 
 	/**
 	 * Unit Tests for Manager service
+	 * @throws Exception 
 	 */
-	public void testStoreManager() throws AssertionFailedError {
-		try {
-			//week 3
-			//IManagerSvc ics = factory.getManagerSvc();
-			
-			//week 4
-			IManagerSvc ics = (IManagerSvc) factory.getService(IManagerSvc.NAME);
-			
-			// First let's store the Inventory
-			assertTrue(ics.storeManager(m));
-			
-			// Then let's read it back in
-			m = ics.getManager(m.getEmployeeID());
-			assertTrue(m.validate());
-			
-			// Update the Employee
-			m.setLastName("Smith");
-			assertTrue(ics.storeManager(m));
-			
-			// Finally, let's cleanup the file that was created
-			assertTrue(ics.deleteManager(m.getEmployeeID()));
-		}
-		catch(Exception e) {
-			System.out.println("Exception in testStoreManager: " + e.getMessage());
-			fail(e.getMessage());
-		}
+	@Test
+	public void testStoreManager() throws AssertionFailedError, Exception {
+		// First let's store the Inventory
+		assertTrue(ics.storeManager(m));
+
+		// Then let's read it back in
+		m = ics.getManager(m.getEmployeeID());
+		assertTrue(m.validate());
+
+		// Update the Employee
+		m.setLastName("Smith");
+		assertTrue(ics.storeManager(m));
+
+		// Finally, let's cleanup the file that was created
+		assertTrue(ics.deleteManager(m.getEmployeeID()));
 	}
 }

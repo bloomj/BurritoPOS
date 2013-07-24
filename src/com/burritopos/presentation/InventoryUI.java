@@ -19,14 +19,11 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
 import org.apache.log4j.*;
-import java.util.Date;
-import org.springframework.context.*;
 import org.springframework.context.support.*;
 
 import com.burritopos.business.InventoryManager;
 import com.burritopos.domain.Inventory;
 import com.burritopos.exception.ServiceLoadException;
-
 
 /**
  * @author james.bloom
@@ -99,14 +96,27 @@ public class InventoryUI extends JInternalFrame {
 	 */
 	private InventoryManager iManager;
 	private Inventory curInventory;
+    
+	// Spring configuration
+    private static final String SPRING_CONFIG_DEFAULT = "applicationContext.xml";
 	
 	// Inventory constructor
 	public InventoryUI (String name, Inventory i) throws ServiceLoadException, Exception {
 		super(name);
+        
+        //Spring Framework IoC
+        ClassPathXmlApplicationContext beanfactory = null;
+        try {
+            beanfactory = new ClassPathXmlApplicationContext(SPRING_CONFIG_DEFAULT);
+            iManager = (InventoryManager)beanfactory.getBean("InventoryManager");
 
-		//Spring Framework IoC
-        ApplicationContext context = new ClassPathXmlApplicationContext(new String[] {"spring.cfg.xml"});
-        iManager = (InventoryManager)context.getBean("InventoryManager");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (beanfactory != null) {
+                beanfactory.close();
+            }
+        }
         
         //iManager = new InventoryManager();
 		curInventory = i;
@@ -340,7 +350,7 @@ public class InventoryUI extends JInternalFrame {
 	}
 	
 	public void setDefaultValues() {
-		dLog.trace(new Date() + " | Updating Default Values");
+		dLog.trace("Updating Default Values");
 		
 		try {
 			beefTxt.setText(curInventory.getBeefQty().toString());
@@ -367,69 +377,92 @@ public class InventoryUI extends JInternalFrame {
 			tomatoTxt.setText(curInventory.getTomatoesQty().toString());
 		}
 		catch(Exception e) {
-			dLog.error(new Date() + " | Exception in setDefaultValues: "+e.getMessage());
+			dLog.error("Exception in setDefaultValues: "+e.getMessage());
+			e.printStackTrace();
 		}
 	}
 	
 	public void updateInventoryBtnOnClick() {
-		dLog.trace(new Date() + " | Update Inventory button has been clicked");
+		dLog.trace("Update Inventory button has been clicked");
 		
 		try {
 			//set updated values
-			if(Integer.decode(beefTxt.getText()) >= 0)
+			if(Integer.decode(beefTxt.getText()) >= 0) {
 				curInventory.setBeefQty(Integer.decode(beefTxt.getText()));
-			if(Integer.decode(chickenTxt.getText()) >= 0)
+			}
+			if(Integer.decode(chickenTxt.getText()) >= 0) {
 				curInventory.setChickenQty(Integer.decode(chickenTxt.getText()));
-			if(Integer.decode(hummusTxt.getText()) >= 0)
+			}
+			if(Integer.decode(hummusTxt.getText()) >= 0) {
 				curInventory.setHummusQty(Integer.decode(hummusTxt.getText()));
-			if(Integer.decode(flourTortTxt.getText()) >= 0)
+			}
+			if(Integer.decode(flourTortTxt.getText()) >= 0) {
 				curInventory.setFlourTortillaQty(Integer.decode(flourTortTxt.getText()));
-			if(Integer.decode(wheatTortTxt.getText()) >= 0)
+			}
+			if(Integer.decode(wheatTortTxt.getText()) >= 0) {
 				curInventory.setWheatTortillaQty(Integer.decode(wheatTortTxt.getText()));
-			if(Integer.decode(chiliTortTxt.getText()) >= 0)
+			}
+			if(Integer.decode(chiliTortTxt.getText()) >= 0) {
 				curInventory.setChiliTortillaQty(Integer.decode(chiliTortTxt.getText()));
-			if(Integer.decode(herbGarlicTortTxt.getText()) >= 0)
+			}
+			if(Integer.decode(herbGarlicTortTxt.getText()) >= 0) {
 				curInventory.setHerbGarlicTortillaQty(Integer.decode(herbGarlicTortTxt.getText()));
-			if(Integer.decode(jalapenoTortTxt.getText()) >= 0)
+			}
+			if(Integer.decode(jalapenoTortTxt.getText()) >= 0) {
 				curInventory.setJalapenoCheddarTortillaQty(Integer.decode(jalapenoTortTxt.getText()));
-			if(Integer.decode(tomatoTortTxt.getText()) >= 0)
+			}
+			if(Integer.decode(tomatoTortTxt.getText()) >= 0) {
 				curInventory.setTomatoBasilTortillaQty(Integer.decode(tomatoTortTxt.getText()));
-			if(Integer.decode(whiteRiceTxt.getText()) >= 0)
+			}
+			if(Integer.decode(whiteRiceTxt.getText()) >= 0) {
 				curInventory.setWhiteRiceQty(Integer.decode(whiteRiceTxt.getText()));
-			if(Integer.decode(brownRiceTxt.getText()) >= 0)
+			}
+			if(Integer.decode(brownRiceTxt.getText()) >= 0) {
 				curInventory.setBrownRiceQty(Integer.decode(brownRiceTxt.getText()));
-			if(Integer.decode(blackBeansTxt.getText()) >= 0)
+			}
+			if(Integer.decode(blackBeansTxt.getText()) >= 0) {
 				curInventory.setBlackBeansQty(Integer.decode(blackBeansTxt.getText()));
-			if(Integer.decode(pintoBeansTxt.getText()) >= 0)
+			}
+			if(Integer.decode(pintoBeansTxt.getText()) >= 0) {
 				curInventory.setPintoBeansQty(Integer.decode(pintoBeansTxt.getText()));
-			if(Integer.decode(salsaPicoTxt.getText()) >= 0)
+			}
+			if(Integer.decode(salsaPicoTxt.getText()) >= 0) {
 				curInventory.setSalsaPicoQty(Integer.decode(salsaPicoTxt.getText()));
-			if(Integer.decode(salsaVerdeTxt.getText()) >= 0)
+			}
+			if(Integer.decode(salsaVerdeTxt.getText()) >= 0) {
 				curInventory.setSalsaVerdeQty(Integer.decode(salsaVerdeTxt.getText()));
-			if(Integer.decode(salsaSpecialTxt.getText()) >= 0)
+			}
+			if(Integer.decode(salsaSpecialTxt.getText()) >= 0) {
 				curInventory.setSalsaSpecialQty(Integer.decode(salsaSpecialTxt.getText()));
-			if(Integer.decode(lettuceTxt.getText()) >= 0)
+			}
+			if(Integer.decode(lettuceTxt.getText()) >= 0) {
 				curInventory.setLettuceQty(Integer.decode(lettuceTxt.getText()));
-			if(Integer.decode(cucumbersTxt.getText()) >= 0)
+			}
+			if(Integer.decode(cucumbersTxt.getText()) >= 0) {
 				curInventory.setCucumberQty(Integer.decode(cucumbersTxt.getText()));
-			if(Integer.decode(jalapenoTxt.getText()) >= 0)
+			}
+			if(Integer.decode(jalapenoTxt.getText()) >= 0) {
 				curInventory.setJalapenosQty(Integer.decode(jalapenoTxt.getText()));
-			if(Integer.decode(onionTxt.getText()) >= 0)
+			}
+			if(Integer.decode(onionTxt.getText()) >= 0) {
 				curInventory.setOnionQty(Integer.decode(onionTxt.getText()));
-			if(Integer.decode(tomatoTxt.getText()) >= 0)
+			}
+			if(Integer.decode(tomatoTxt.getText()) >= 0) {
 				curInventory.setTomatoesQty(Integer.decode(tomatoTxt.getText()));
+			}
 			
 			if(curInventory.validate()) {
 				iManager.updateInventory(curInventory);
 			}
 		}
 		catch(Exception e) {
-			dLog.error(new Date() + " | Exception in updateInventoryBtnOnClick: "+e.getMessage());
+			dLog.error("Exception in updateInventoryBtnOnClick: "+e.getMessage());
+			e.printStackTrace();
 		}
 	}
 	
 	public void exitBtnOnClick() {
-		dLog.trace(new Date() + " | Exit button has been clicked");
+		dLog.trace("Exit button has been clicked");
 		
 		try {
 			if(curInventory.validate()) {
@@ -437,10 +470,10 @@ public class InventoryUI extends JInternalFrame {
 			}
 		}
 		catch(Exception e) {
-			dLog.error(new Date() + " | Exception in exitBtnOnClick: "+e.getMessage());
+			dLog.error("Exception in exitBtnOnClick: "+e.getMessage());
 		}
 		
-		dLog.trace(new Date() + " | Closing Inventory Form");
+		dLog.trace("Closing Inventory Form");
 		dispose();
 	}
 }

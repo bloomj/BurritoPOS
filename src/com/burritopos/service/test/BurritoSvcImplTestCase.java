@@ -3,82 +3,72 @@
  */
 package com.burritopos.service.test;
 
+import static org.junit.Assert.*;
+
 import java.math.BigDecimal;
 //import java.util.UUID;
 import org.apache.log4j.*;
-import java.util.Date;
+import org.junit.Before;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.burritopos.domain.Burrito;
+
 import junit.framework.AssertionFailedError;
-import junit.framework.TestCase;
-import com.burritopos.service.Factory;
-import com.burritopos.service.IBurritoSvc;
+import com.burritopos.service.dao.IBurritoSvc;
+import com.burritopos.test.BurritoPOSTestCase;
 
 /**
  * @author james.bloom
  *
  */
-public class BurritoSvcImplTestCase extends TestCase {
-	private Factory factory;
+public class BurritoSvcImplTestCase extends BurritoPOSTestCase {
 	private Burrito b;
+	@Autowired
+	private IBurritoSvc ics;
 	private static Logger dLog = Logger.getLogger(BurritoSvcImplTestCase.class);
 
-	/* (non-Javadoc)
-	 * @see junit.framework.TestCase#setUp()
-	 */
-        @Override
-	protected void setUp() throws Exception {
-		super.setUp();
-		factory = Factory.getInstance();
-		b = new Burrito(new Integer("1"),false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,new BigDecimal("3.00"));
+	public BurritoSvcImplTestCase() {
+		super();
 	}
-
-	/* (non-Javadoc)
-	 * @see junit.framework.TestCase#tearDown()
+	
+	/**
+	 * Sets up the necessary code to run the tests.
+	 *
+	 * @throws Exception if it cannot set up the test.
 	 */
-        @Override
-	protected void tearDown() throws Exception {
-		super.tearDown();
+	@Before
+	public void initCommonResources() throws Exception {
+		super.initCommonResources();
+		
+		b = new Burrito(new Integer("1"),false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,new BigDecimal("3.00"));
 	}
 
 	/**
 	 * Unit Tests for Burrito service
+	 * @throws Exception 
 	 */
-	public void testBurritoSvc() throws AssertionFailedError {
-		try {
-			//week 3
-			//IBurritoSvc ics = factory.getBurritoSvc();
-			
-			//week 4
-            dLog.trace(new Date() + " | TEST | Going to get the service implementation");
-            System.out.println("TEST | Going to get the service implementation");
-			IBurritoSvc ics = (IBurritoSvc) factory.getService(IBurritoSvc.NAME);
+    @Test
+	public void testBurritoSvc() throws AssertionFailedError, Exception {
+    	dLog.trace("Going to store burrito");
+    	// First let's create the Burrito
+    	assertTrue(ics.storeBurrito(b));
 
-            dLog.trace(new Date() + " | TEST | Going to store burrito");
-            System.out.println("TEST | Going to store burrito");
-			// First let's create the Burrito
-			assertTrue(ics.storeBurrito(b));
+    	dLog.trace("Going to read burrito");
+    	// Then let's read it back in
+    	b = ics.getBurrito(b.getId());
+    	assertTrue(b.validate());
 
-            dLog.trace(new Date() + " | TEST | Going to read burrito");
-			// Then let's read it back in
-			b = ics.getBurrito(b.getId());
-			assertTrue(b.validate());
-			
-			dLog.trace(new Date() + " | TEST | Going to update burrito");
-			// Update the burrito
-			b.setBeef(false);
-			b.setBrownRice(true);
-			b.setHummus(true);
-			assertTrue(ics.storeBurrito(b));
+    	dLog.trace("Going to update burrito");
+    	// Update the burrito
+    	b.setBeef(false);
+    	b.setBrownRice(true);
+    	b.setHummus(true);
+    	assertTrue(ics.storeBurrito(b));
 
-            dLog.trace(new Date() + " | TEST | Going to delete burrito");
-			// Finally, let's cleanup the file that was created
-			assertTrue(ics.deleteBurrito(b.getId()));
-		}
-		catch(Exception e) {
-			System.out.println("Exception in testStoreBurrito: " + e.getMessage());
-			fail(e.getMessage());
-		}
+    	dLog.trace("Going to delete burrito");
+    	// Finally, let's cleanup the file that was created
+    	assertTrue(ics.deleteBurrito(b.getId()));
 	}
 
 }

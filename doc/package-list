@@ -8,4 +8,12 @@ com.burritopos.domain.test
 com.burritopos.exception
 com.burritopos.presentation
 com.burritopos.service
+com.burritopos.service.crypto
+com.burritopos.service.dao
+com.burritopos.service.dao.file
+com.burritopos.service.dao.hibernate
+com.burritopos.service.dao.jdbc
+com.burritopos.service.dao.mongo
+com.burritopos.service.net
 com.burritopos.service.test
+com.burritopos.test

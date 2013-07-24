@@ -4,6 +4,10 @@ CREATE DATABASE `neatoburrito` /*!40100 DEFAULT CHARACTER SET latin1 */$$
 
 delimiter $$
 
+USE neatoburrito $$
+
+delimiter $$
+
 CREATE TABLE `burrito` (
   `id` char(36) DEFAULT NULL,
   `flourTortilla` tinyint(1) DEFAULT NULL,

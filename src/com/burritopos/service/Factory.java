@@ -9,12 +9,23 @@ import java.util.Date;
 import org.xml.sax.*;
 import org.xml.sax.helpers.DefaultHandler;
 import com.burritopos.exception.ServiceLoadException;
+import com.burritopos.service.dao.IBurritoSvc;
+import com.burritopos.service.dao.ICustomerSvc;
+import com.burritopos.service.dao.IEmployeeSvc;
+import com.burritopos.service.dao.IInventorySvc;
+import com.burritopos.service.dao.IManagerSvc;
+import com.burritopos.service.dao.IOrderSvc;
+import com.burritopos.service.dao.file.BurritoSvcImpl;
+import com.burritopos.service.dao.file.CustomerSvcImpl;
+import com.burritopos.service.dao.file.EmployeeSvcImpl;
+import com.burritopos.service.dao.file.InventorySvcImpl;
+import com.burritopos.service.dao.file.ManagerSvcImpl;
+import com.burritopos.service.dao.file.OrderSvcImpl;
+
 import javax.xml.parsers.SAXParserFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import java.util.HashMap;
-
-
 
 /**
  * @author james.bloom
@@ -22,7 +33,6 @@ import java.util.HashMap;
  */
 @SuppressWarnings("unused")
 public class Factory extends DefaultHandler {
-
 	private static Logger dLog = Logger.getLogger(Factory.class);
 	private HashMap<String, String> fProperties = new HashMap<String,String>();
 	private String curKey = "";
@@ -34,7 +44,8 @@ public class Factory extends DefaultHandler {
 			this.parse(new File("config/properties.xml"));
 		}
 		catch(Exception e) {
-			dLog.error(new Date() + " | Exception in parse: "+e.getMessage());
+			dLog.error("Exception in parse: "+e.getMessage());
+			e.printStackTrace();
 		}
 	}
 	private final static Factory factory = new Factory();
@@ -45,19 +56,21 @@ public class Factory extends DefaultHandler {
 	//@SuppressWarnings("unchecked")
 	public IService getService(String name) throws ServiceLoadException
 	{
-		dLog.trace(new Date() + " | In getService | name: " + name);
+		dLog.trace("In getService | name: " + name);
 		try 
 		{
 			Class<?> c = Class.forName(getImplName(name));
 			return (IService)c.newInstance();
 		} 
 		catch (ClassNotFoundException e1) {
-			dLog.error(new Date() + " | ClassNotFoundException in getService: " + e1.getMessage());
+			dLog.error("ClassNotFoundException in getService: " + e1.getMessage());
+			e1.printStackTrace();
 			throw new ServiceLoadException(name + " not loaded");
 		}
 		catch (Exception e2) 
 		{
-			dLog.error(new Date() + " | Exception in getService: " + e2.getMessage());
+			dLog.error("Exception in getService: " + e2.getMessage());
+			e2.printStackTrace();
 			throw new ServiceLoadException(name + " not loaded");
 		}
 	}
@@ -73,18 +86,19 @@ public class Factory extends DefaultHandler {
 		    //props.load(fis);
 		    props.loadFromXML(fis);
 		    fis.close();
-		    dLog.trace(new Date() + " | Got " + props.size() + " service properties");
+		    dLog.trace("Got " + props.size() + " service properties");
 		    retVal = props.getProperty(name);*/
 
 			//read out of HashMap populated by SAX parser
 			retVal = fProperties.get(name).toString();
 
-			dLog.trace(new Date() + " | Got " + retVal + " from properties.xml file for name: " + name);
+			dLog.trace("Got " + retVal + " from properties.xml file for name: " + name);
 		}
 		catch(Exception e) {
 			File dir1 = new File (".");
-			dLog.trace(new Date() + " | Current diretory: " + dir1.getCanonicalPath());
-			dLog.error(new Date() + " | Exception in getImplName: "+e.getMessage());
+			dLog.trace("Current diretory: " + dir1.getCanonicalPath());
+			dLog.error("Exception in getImplName: "+e.getMessage());
+			e.printStackTrace();
 		}
 
 		return retVal;
@@ -92,27 +106,27 @@ public class Factory extends DefaultHandler {
 
 	//week 3 specific implementation calls
 	public ICustomerSvc getCustomerSvc() {
-		return new CustomerSvcFileImpl();
+		return new CustomerSvcImpl();
 	}
 
 	public IBurritoSvc getBurritoSvc() {
-		return new BurritoSvcFileImpl();
+		return new BurritoSvcImpl();
 	}
 
 	public IEmployeeSvc getEmployeeSvc() {
-		return new EmployeeSvcFileImpl();
+		return new EmployeeSvcImpl();
 	}
 
 	public IInventorySvc getInventorySvc() {
-		return new InventorySvcFileImpl();
+		return new InventorySvcImpl();
 	}
 
 	public IManagerSvc getManagerSvc() {
-		return new ManagerSvcFileImpl();
+		return new ManagerSvcImpl();
 	}
 
 	public IOrderSvc getOrderSvc() {
-		return new OrderSvcFileImpl();
+		return new OrderSvcImpl();
 	}
 
 	// SAX Parsing
@@ -121,7 +135,7 @@ public class Factory extends DefaultHandler {
 		//dLog.trace("In startElement | uri: " + uri + " | localName: " + localName + " | qName: " + qName);
 		if (qName.equals("entry")) {
 			// process the start of the entry tag
-			//dLog.info("Got an entry tag in startElement | Length: " + attrib.getLength());
+			//dLog.trace("Got an entry tag in startElement | Length: " + attrib.getLength());
 			for(int n=0; n<attrib.getLength(); n++) {
 				//dLog.trace("Element at " + n + ": " + attrib.getQName(n) + " | " + attrib.getValue(n));
 
@@ -148,7 +162,7 @@ public class Factory extends DefaultHandler {
 		}
 	}
 
-	public void parse(File file) throws Exception {
+	private void parse(File file) throws Exception {
 		try {
 			SAXParserFactory saxFactory = SAXParserFactory.newInstance();
 			SAXParser parser = saxFactory.newSAXParser();
@@ -157,8 +171,9 @@ public class Factory extends DefaultHandler {
 			parser.parse(file, this);
 		} catch (Exception e) {
 			File dir1 = new File (".");
-			dLog.trace(new Date() + " | Current directory: " + dir1.getCanonicalPath());
-			dLog.error(new Date() + " | Exception in parse: "+e.getMessage());
+			dLog.trace("Current directory: " + dir1.getCanonicalPath());
+			dLog.error("Exception in parse: "+e.getMessage());
+			e.printStackTrace();
 		}
 	}
 
