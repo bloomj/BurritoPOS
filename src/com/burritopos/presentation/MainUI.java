@@ -47,10 +47,10 @@ public class MainUI extends JFrame {
             ClassPathXmlApplicationContext beanfactory = null;
             try {
                 beanfactory = new ClassPathXmlApplicationContext(SPRING_CONFIG_DEFAULT);
-                iManager = (InventoryManager)beanfactory.getBean("InventoryManager");
+                iManager = (InventoryManager)beanfactory.getBean("inventoryManager");
 
             } catch (Exception e) {
-                e.printStackTrace();
+                dLog.error("Error setting Spring bean", e);
             } finally {
                 if (beanfactory != null) {
                     beanfactory.close();
@@ -62,8 +62,7 @@ public class MainUI extends JFrame {
 			iManager.createInventory(i);
 		}
 		catch(Exception e) {
-			dLog.error("Unable to create Inventory: "+e.getMessage());
-            e.printStackTrace();
+			dLog.error("Unable to create Inventory", e);
 		}
 		
 		this.setBounds(0, 0, 500, 500);
@@ -96,12 +95,10 @@ public class MainUI extends JFrame {
 					theDesktop.add(caUI); 	
 				}
 				catch(ServiceLoadException e1) {
-					dLog.error("Exception in Create Order: "+e1.getMessage());
-					e1.printStackTrace();
+					dLog.error("Exception in Create Order", e1);
 				}
 				catch(Exception e2) {
-					dLog.error("Exception in calculateTotal: "+e2.getMessage());
-					e2.printStackTrace();
+					dLog.error("Exception in calculateTotal", e2);
 				}
 			}
 		});
@@ -121,12 +118,10 @@ public class MainUI extends JFrame {
 					theDesktop.add(iUI); 	
 				}
 				catch(ServiceLoadException e1) {
-					dLog.error("Exception in View Inventory: "+e1.getMessage());
-					e1.printStackTrace();
+					dLog.error("Exception in View Inventory", e1);
 				}
 				catch(Exception e2) {
-					dLog.error("Exception in View Inventory: "+e2.getMessage());
-					e2.printStackTrace();
+					dLog.error("Exception in View Inventory", e2);
 				}
 			}
 		});
@@ -143,12 +138,10 @@ public class MainUI extends JFrame {
 					theDesktop.add(ovUI); 	
 				}
 				catch(ServiceLoadException e1) {
-					dLog.error("Exception in View Order History: "+e1.getMessage());
-					e1.printStackTrace();
+					dLog.error("Exception in View Order History", e1);
 				}
 				catch(Exception e2) {
-					dLog.error("Exception in View Order History: "+e2.getMessage());
-					e2.printStackTrace();
+					dLog.error("Exception in View Order History", e2);
 				}
 			}
 		});

@@ -41,9 +41,7 @@ public final class Prices {
 		catch(Exception e) {
 			File dir1 = new File (".");
 			dLog.trace("Current directory: " + dir1.getCanonicalPath());
-			dLog.error("Exception in getItemPrice: "+e.getMessage());
-			e.printStackTrace();
-			retVal = new BigDecimal(-1);
+			dLog.error("Exception in getItemPrice", e);
 		}
 
 		return retVal;

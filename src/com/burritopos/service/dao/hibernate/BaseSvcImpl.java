@@ -1,5 +1,7 @@
 package com.burritopos.service.dao.hibernate;
 
+import java.io.File;
+
 import org.hibernate.*;
 import org.hibernate.cfg.*;
 import org.hibernate.service.*;
@@ -20,7 +22,7 @@ public class BaseSvcImpl {
 		if (sessionFactory == null) {
 			dLog.trace("Configuring Hibernate");
 			
-			config.configure("hibernate\\hibernate.cfg.xml");
+			config.configure("hibernate" + File.separator + "hibernate.cfg.xml");
 			serviceRegistry = new ServiceRegistryBuilder().applySettings(config.getProperties()).buildServiceRegistry();
 			sessionFactory = config.buildSessionFactory(serviceRegistry);
 		}

@@ -36,8 +36,7 @@ public class OrderSvcImpl extends BaseSvcImpl implements IOrderSvc {
 			session.evict(Order.class);
 		} 
 		catch(Exception e) {
-			dLog.error("Exception in getOrder: "+e.getMessage());
-			e.printStackTrace();
+			dLog.error("Exception in getOrder", e);
 		}
 		finally {
 			//ensure that session is close regardless of the errors in try/catch
@@ -83,9 +82,7 @@ public class OrderSvcImpl extends BaseSvcImpl implements IOrderSvc {
 			}
 		} 
 		catch(Exception e) {
-			dLog.error("Exception in storeOrder: "+e.getMessage());
-			e.printStackTrace();
-			result = false;
+			dLog.error("Exception in storeOrder", e);
 		}
 		finally {
 			//ensure that session is close regardless of the errors in try/catch
@@ -119,9 +116,7 @@ public class OrderSvcImpl extends BaseSvcImpl implements IOrderSvc {
 			dLog.trace("Deleted order: " + result);
 		}
 		catch(Exception e) {
-			dLog.error("Exception in deleteOrder: "+e.getMessage());
-			e.printStackTrace();
-			result = false;
+			dLog.error("Exception in deleteOrder", e);
 		}
 		finally {
 			//ensure that session is close regardless of the errors in try/catch
@@ -157,8 +152,7 @@ public class OrderSvcImpl extends BaseSvcImpl implements IOrderSvc {
 			session.evict(Order.class);
 		} 
 		catch(Exception e) {
-			dLog.error("Exception in getAllOrders: "+e.getMessage());
-			e.printStackTrace();
+			dLog.error("Exception in getAllOrders", e);
 		}
 		finally {
 			//ensure that session is close regardless of the errors in try/catch

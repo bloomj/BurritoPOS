@@ -44,8 +44,7 @@ public class Factory extends DefaultHandler {
 			this.parse(new File("config/properties.xml"));
 		}
 		catch(Exception e) {
-			dLog.error("Exception in parse: "+e.getMessage());
-			e.printStackTrace();
+			dLog.error("Exception in parse", e);
 		}
 	}
 	private final static Factory factory = new Factory();
@@ -63,14 +62,12 @@ public class Factory extends DefaultHandler {
 			return (IService)c.newInstance();
 		} 
 		catch (ClassNotFoundException e1) {
-			dLog.error("ClassNotFoundException in getService: " + e1.getMessage());
-			e1.printStackTrace();
+			dLog.error("ClassNotFoundException in getService", e1);
 			throw new ServiceLoadException(name + " not loaded");
 		}
 		catch (Exception e2) 
 		{
-			dLog.error("Exception in getService: " + e2.getMessage());
-			e2.printStackTrace();
+			dLog.error("Exception in getService: ", e2);
 			throw new ServiceLoadException(name + " not loaded");
 		}
 	}
@@ -97,8 +94,7 @@ public class Factory extends DefaultHandler {
 		catch(Exception e) {
 			File dir1 = new File (".");
 			dLog.trace("Current diretory: " + dir1.getCanonicalPath());
-			dLog.error("Exception in getImplName: "+e.getMessage());
-			e.printStackTrace();
+			dLog.error("Exception in getImplName", e);
 		}
 
 		return retVal;
@@ -172,8 +168,7 @@ public class Factory extends DefaultHandler {
 		} catch (Exception e) {
 			File dir1 = new File (".");
 			dLog.trace("Current directory: " + dir1.getCanonicalPath());
-			dLog.error("Exception in parse: "+e.getMessage());
-			e.printStackTrace();
+			dLog.error("Exception in parse: ", e);
 		}
 	}
 

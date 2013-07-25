@@ -64,12 +64,10 @@ public class InventorySvcImpl implements IInventorySvc {
 			}
 		} 
 		catch (SQLException e1) {
-			dLog.error("SQLException in getInventory: "+e1.getMessage());
-			e1.printStackTrace();
+			dLog.error("SQLException in getInventory", e1);
 		}
 		catch(Exception e2) {
-			dLog.error("Exception in getInventory: "+e2.getMessage());
-			e2.printStackTrace();
+			dLog.error("Exception in getInventory", e2);
 		}
 		finally {
 			//ensure that conn/stmt is close regardless of the errors in try/catch
@@ -158,12 +156,10 @@ public class InventorySvcImpl implements IInventorySvc {
 			}
 		} 
 		catch (SQLException e1) {
-			dLog.error("SQLException in storeInventory: "+e1.getMessage());
-			e1.printStackTrace();
+			dLog.error("SQLException in storeInventory", e1);
 		}
 		catch(Exception e2) {
-			dLog.error("Exception in storeInventory: "+e2.getMessage());
-			e2.printStackTrace();
+			dLog.error("Exception in storeInventory", e2);
 		}
 		finally {
 			//ensure that conn/stmt is close regardless of the errors in try/catch
@@ -196,12 +192,10 @@ public class InventorySvcImpl implements IInventorySvc {
 			}
 		}
 		catch (SQLException e1) {
-			dLog.error("SQLException in deleteInventory: "+e1.getMessage());
-			e1.printStackTrace();
+			dLog.error("SQLException in deleteInventory", e1);
 		}
 		catch(Exception e2) {
-			dLog.error("Exception in deleteInventory: "+e2.getMessage());
-			e2.printStackTrace();
+			dLog.error("Exception in deleteInventory", e2);
 		}
 		finally {
 			//ensure that conn/stmt is close regardless of the errors in try/catch

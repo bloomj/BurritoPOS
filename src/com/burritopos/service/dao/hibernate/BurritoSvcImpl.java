@@ -33,8 +33,7 @@ public class BurritoSvcImpl extends BaseSvcImpl implements IBurritoSvc {
 			tranx.commit();
 		}
 		catch(Exception e) {
-			dLog.error("Exception in getBurrito: "+e.getMessage());
-			e.printStackTrace();
+			dLog.error("Exception in getBurrito", e);
 		}
 		finally {
 			//ensure that session is close regardless of the errors in try/catch
@@ -74,9 +73,7 @@ public class BurritoSvcImpl extends BaseSvcImpl implements IBurritoSvc {
 			}
 		}
 		catch(Exception e) {
-			dLog.error("Exception in storeBurrito: "+e.getMessage());
-			e.printStackTrace();
-			result = false;
+			dLog.error("Exception in storeBurrito: ", e);
 		}
 		finally {
 			//ensure that session is close regardless of the errors in try/catch
@@ -106,9 +103,7 @@ public class BurritoSvcImpl extends BaseSvcImpl implements IBurritoSvc {
 			}
 		}
 		catch(Exception e) {
-			dLog.error("Exception in deleteBurrito: "+e.getMessage());
-			e.printStackTrace();
-			result = false;
+			dLog.error("Exception in deleteBurrito: ", e);
 		}
 		finally {
 			//ensure that session is close regardless of the errors in try/catch

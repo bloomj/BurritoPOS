@@ -45,12 +45,10 @@ public class EmployeeSvcImpl implements IEmployeeSvc {
 			}
 		} 
 		catch (SQLException e1) {
-			dLog.error("SQLException in getEmployee: "+e1.getMessage());
-			e1.printStackTrace();
+			dLog.error("SQLException in getEmployee", e1);
 		}
 		catch(Exception e2) {
-			dLog.error("Exception in getEmployee: "+e2.getMessage());
-			e2.printStackTrace();
+			dLog.error("Exception in getEmployee", e2);
 		}
 		finally {
 			//ensure that conn/stmt is close regardless of the errors in try/catch
@@ -113,12 +111,10 @@ public class EmployeeSvcImpl implements IEmployeeSvc {
 			}
 		} 
 		catch (SQLException e1) {
-			dLog.error("SQLException in storeEmployee: "+e1.getMessage());
-			e1.printStackTrace();
+			dLog.error("SQLException in storeEmployee", e1);
 		}
 		catch(Exception e2) {
-			dLog.error("Exception in storeEmployee: "+e2.getMessage());
-			e2.printStackTrace();
+			dLog.error("Exception in storeEmployee", e2);
 		}
 		finally {
 			//ensure that conn/stmt is close regardless of the errors in try/catch
@@ -147,16 +143,15 @@ public class EmployeeSvcImpl implements IEmployeeSvc {
 			stmt.setString(1, id.toString());
 			stmt.setBoolean(2, Boolean.FALSE);
 
-			if(stmt.executeUpdate() > 0)
+			if(stmt.executeUpdate() > 0) {
 				result = true;
+			}
 		}
 		catch (SQLException e1) {
-			dLog.error("SQLException in deleteEmployee: "+e1.getMessage());
-			e1.printStackTrace();
+			dLog.error("SQLException in deleteEmployee", e1);
 		}
 		catch(Exception e) {
-			dLog.error("Exception in deleteEmployee: "+e.getMessage());
-			e.printStackTrace();
+			dLog.error("Exception in deleteEmployee", e);
 		}
 		finally {
 			//ensure that conn/stmt is close regardless of the errors in try/catch

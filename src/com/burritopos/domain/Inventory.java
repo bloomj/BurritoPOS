@@ -172,8 +172,7 @@ public class Inventory implements Serializable {
 			setOnionQty(OnionQty);	
 		}
 		catch(InsufficientInventoryException e) {
-			dLog.error("Exception in Inventory: "+e.getMessage());
-			e.printStackTrace();
+			dLog.error("Exception in Inventory", e);
 		}
 	}
 

@@ -35,16 +35,13 @@ public class ManagerSvcImpl implements IManagerSvc {
 			}
 		} 
 		catch (IOException e1) {
-			dLog.error("IOException in getManager: "+e1.getMessage());
-			e1.printStackTrace();
+			dLog.error("IOException in getManager", e1);
 		}
 		catch (ClassNotFoundException e2) {
-			dLog.error("ClassNotFoundException in getManager: "+e2.getMessage());
-			e2.printStackTrace();
+			dLog.error("ClassNotFoundException in getManager", e2);
 		}
 		catch(Exception e3) {
-			dLog.error("Exception in getManager: "+e3.getMessage());
-			e3.printStackTrace();
+			dLog.error("Exception in getManager", e3);
 		}
 		finally {
 			//ensure that input is close regardless of the errors in try/catch
@@ -71,14 +68,10 @@ public class ManagerSvcImpl implements IManagerSvc {
 			}
 		} 
 		catch (IOException e1) {
-			dLog.error("IOException in storeManager: "+e1.getMessage());
-			e1.printStackTrace();
-			result = false;
+			dLog.error("IOException in storeManager", e1);
 		}
 		catch(Exception e2) {
-			dLog.error("Exception in storeManager: "+e2.getMessage());
-			e2.printStackTrace();
-			result = false;
+			dLog.error("Exception in storeManager", e2);
 		}
 		finally {
 			//ensure that output is close regardless of the errors in try/catch

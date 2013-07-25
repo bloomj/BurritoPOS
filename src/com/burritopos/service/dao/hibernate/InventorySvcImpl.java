@@ -30,8 +30,7 @@ public class InventorySvcImpl extends BaseSvcImpl implements IInventorySvc {
 			tranx.commit();
 		} 
 		catch(Exception e) {
-			dLog.error("Exception in getInventory: "+e.getMessage());
-			e.printStackTrace();
+			dLog.error("Exception in getInventory", e);
 		}
 		finally {
 			//ensure that session is close regardless of the errors in try/catch
@@ -61,9 +60,7 @@ public class InventorySvcImpl extends BaseSvcImpl implements IInventorySvc {
 			}
 		} 
 		catch(Exception e) {
-			dLog.error("Exception in storeInventory: "+e.getMessage());
-			e.printStackTrace();
-			result = false;
+			dLog.error("Exception in storeInventory", e);
 		}
 		finally {
 			//ensure that session is close regardless of the errors in try/catch
@@ -93,9 +90,7 @@ public class InventorySvcImpl extends BaseSvcImpl implements IInventorySvc {
 			}
 		}
 		catch(Exception e) {
-			dLog.error("Exception in deleteInventory: "+e.getMessage());
-			e.printStackTrace();
-			result = false;
+			dLog.error("Exception in deleteInventory", e);
 		}
 		finally {
 			//ensure that session is close regardless of the errors in try/catch

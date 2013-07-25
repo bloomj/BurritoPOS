@@ -8,7 +8,6 @@ import org.apache.log4j.*;
 
 import com.burritopos.domain.Employee;
 import com.burritopos.domain.Manager;
-import com.burritopos.service.crypto.BCrypt;
 
 /**
  *
@@ -60,10 +59,7 @@ public class AuthenticationSvcSocketImpl implements IAuthenticationSvc {
     private boolean sendLoginRequest(String userName, String password) throws Exception {
         boolean result = false;
 
-        try {
-        	// hash password
-        	password = BCrypt.hashpw(password, BCrypt.gensalt());
-        	
+        try {        	
             socket = new Socket(BURRITOPOS_SERVER_IP, BURRITOPOS_SERVER_PORT);
             in = new ObjectInputStream(socket.getInputStream());
             out = new ObjectOutputStream(socket.getOutputStream());
@@ -86,8 +82,7 @@ public class AuthenticationSvcSocketImpl implements IAuthenticationSvc {
             out.writeObject("exit");
         }
         catch(Exception e1) {
-        	dLog.error("Exception in sendLoginRequest: " + e1.getMessage());
-        	e1.printStackTrace();
+        	dLog.error("Exception in sendLoginRequest", e1);
         }
         finally {
         	try {
@@ -95,8 +90,7 @@ public class AuthenticationSvcSocketImpl implements IAuthenticationSvc {
         		out.close();
         		socket.close();
         	} catch (Exception e2) {
-        		dLog.error("Exception " + e2.getMessage());
-        		e2.printStackTrace();
+        		dLog.error("Exception closing socket", e2);
         	}
         }
 

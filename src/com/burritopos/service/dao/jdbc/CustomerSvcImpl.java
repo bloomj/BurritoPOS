@@ -43,12 +43,10 @@ public class CustomerSvcImpl implements ICustomerSvc {
             }
 		} 
 		catch (SQLException e1) {
-			dLog.error("SQLException in getCustomer: "+e1.getMessage());
-			e1.printStackTrace();
+			dLog.error("SQLException in getCustomer", e1);
 		}
 		catch(Exception e2) {
-			dLog.error("Exception in getCustomer: "+e2.getMessage());
-			e2.printStackTrace();
+			dLog.error("Exception in getCustomer", e2);
 		}
 		finally {
 			//ensure that conn/stmt is close regardless of the errors in try/catch
@@ -111,12 +109,10 @@ public class CustomerSvcImpl implements ICustomerSvc {
 			}
 		} 
 		catch (SQLException e1) {
-			dLog.error("SQLException in storeCustomer: "+e1.getMessage());
-			e1.printStackTrace();
+			dLog.error("SQLException in storeCustomer: ", e1);
 		}
 		catch(Exception e2) {
-			dLog.error("Exception in storeCustomer: "+e2.getMessage());
-			e2.printStackTrace();
+			dLog.error("Exception in storeCustomer: ", e2);
 		}
 		finally {
 			//ensure that conn/stmt is close regardless of the errors in try/catch
@@ -149,12 +145,10 @@ public class CustomerSvcImpl implements ICustomerSvc {
 			}
 		}
 		catch (SQLException e1) {
-			dLog.error("SQLException in deleteCustomer: "+e1.getMessage());
-			e1.printStackTrace();
+			dLog.error("SQLException in deleteCustomer", e1);
 		}
 		catch(Exception e2) {
-			dLog.error("Exception in deleteCustomer: "+e2.getMessage());
-			e2.printStackTrace();
+			dLog.error("Exception in deleteCustomer", e2);
 		}
 		finally {
 			//ensure that conn/stmt is close regardless of the errors in try/catch

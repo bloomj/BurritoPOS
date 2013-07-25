@@ -108,10 +108,10 @@ public class InventoryUI extends JInternalFrame {
         ClassPathXmlApplicationContext beanfactory = null;
         try {
             beanfactory = new ClassPathXmlApplicationContext(SPRING_CONFIG_DEFAULT);
-            iManager = (InventoryManager)beanfactory.getBean("InventoryManager");
+            iManager = (InventoryManager)beanfactory.getBean("inventoryManager");
 
         } catch (Exception e) {
-            e.printStackTrace();
+            dLog.error("Error setting Spring bean", e);
         } finally {
             if (beanfactory != null) {
                 beanfactory.close();
@@ -377,8 +377,7 @@ public class InventoryUI extends JInternalFrame {
 			tomatoTxt.setText(curInventory.getTomatoesQty().toString());
 		}
 		catch(Exception e) {
-			dLog.error("Exception in setDefaultValues: "+e.getMessage());
-			e.printStackTrace();
+			dLog.error("Exception in setDefaultValues", e);
 		}
 	}
 	
@@ -456,8 +455,7 @@ public class InventoryUI extends JInternalFrame {
 			}
 		}
 		catch(Exception e) {
-			dLog.error("Exception in updateInventoryBtnOnClick: "+e.getMessage());
-			e.printStackTrace();
+			dLog.error("Exception in updateInventoryBtnOnClick", e);
 		}
 	}
 	
@@ -470,7 +468,7 @@ public class InventoryUI extends JInternalFrame {
 			}
 		}
 		catch(Exception e) {
-			dLog.error("Exception in exitBtnOnClick: "+e.getMessage());
+			dLog.error("Exception in exitBtnOnClick", e);
 		}
 		
 		dLog.trace("Closing Inventory Form");

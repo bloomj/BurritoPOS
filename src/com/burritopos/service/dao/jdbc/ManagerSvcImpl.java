@@ -45,12 +45,10 @@ public class ManagerSvcImpl implements IManagerSvc {
 			}
 		} 
 		catch (SQLException e1) {
-			dLog.error("SQLException in getManager: "+e1.getMessage());
-			e1.printStackTrace();
+			dLog.error("SQLException in getManager", e1);
 		}
 		catch(Exception e2) {
-			dLog.error("Exception in getManager: "+e2.getMessage());
-			e2.printStackTrace();
+			dLog.error("Exception in getManager", e2);
 		}
 		finally {
 			//ensure that conn/stmt is close regardless of the errors in try/catch
@@ -113,12 +111,10 @@ public class ManagerSvcImpl implements IManagerSvc {
 			}
 		} 
 		catch (SQLException e1) {
-			dLog.error("SQLException in storeManager: "+e1.getMessage());
-			e1.printStackTrace();
+			dLog.error("SQLException in storeManager", e1);
 		}
 		catch(Exception e2) {
-			dLog.error("Exception in storeManager: "+e2.getMessage());
-			e2.printStackTrace();
+			dLog.error("Exception in storeManager", e2);
 		}
 		finally {
 			//ensure that conn/stmt is close regardless of the errors in try/catch
@@ -152,12 +148,10 @@ public class ManagerSvcImpl implements IManagerSvc {
 			}
 		}
 		catch (SQLException e1) {
-			dLog.error("SQLException in deleteManager: "+e1.getMessage());
-			e1.printStackTrace();
+			dLog.error("SQLException in deleteManager", e1);
 		}
 		catch(Exception e2) {
-			dLog.error("Exception in deleteManger: "+e2.getMessage());
-			e2.printStackTrace();
+			dLog.error("Exception in deleteManger", e2);
 		}
 		finally {
 			//ensure that conn/stmt is close regardless of the errors in try/catch

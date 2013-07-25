@@ -30,8 +30,7 @@ public class CustomerSvcImpl extends BaseSvcImpl implements ICustomerSvc {
 			tranx.commit();
 		} 
 		catch(Exception e) {
-			dLog.error("Exception in getCustomer: "+e.getMessage());
-			e.printStackTrace();
+			dLog.error("Exception in getCustomer", e);
 		}
 		finally {
 			//ensure that session is close regardless of the errors in try/catch
@@ -61,9 +60,7 @@ public class CustomerSvcImpl extends BaseSvcImpl implements ICustomerSvc {
 			}
 		} 
 		catch(Exception e) {
-			dLog.error("Exception in storeCustomer: "+e.getMessage());
-			e.printStackTrace();
-			result = false;
+			dLog.error("Exception in storeCustomer", e);
 		}
 		finally {
 			//ensure that session is close regardless of the errors in try/catch
@@ -93,9 +90,7 @@ public class CustomerSvcImpl extends BaseSvcImpl implements ICustomerSvc {
 			}
 		}
 		catch(Exception e) {
-			dLog.error("Exception in deleteCustomer: "+e.getMessage());
-			e.printStackTrace();
-			result = false;
+			dLog.error("Exception in deleteCustomer", e);
 		}
 		finally {
 			//ensure that session is close regardless of the errors in try/catch

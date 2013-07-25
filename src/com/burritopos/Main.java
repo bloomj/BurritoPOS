@@ -56,11 +56,10 @@ public class Main {
 			dLog.info("Finishing Neato Burrito POS execution");
 		}
 		/*catch(ServiceLoadException e1) {
-			dLog.error("Exception in NeatoBurrito: "+e1.getMessage());
+			dLog.error("Exception in NeatoBurrito", e1);
 		}*/
 		catch(Exception e2) {
-			dLog.error("Exception in NeatoBurrito: "+e2.getMessage());
-			e2.printStackTrace();
+			dLog.error("Exception in NeatoBurrito", e2);
 		}
     }
 

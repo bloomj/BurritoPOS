@@ -89,12 +89,10 @@ public class OrderSvcImpl implements IOrderSvc {
 			}
 		} 
 		catch (SQLException e1) {
-			dLog.error("SQLException in getOrder: "+e1.getMessage());
-			e1.printStackTrace();
+			dLog.error("SQLException in getOrder", e1);
 		}
 		catch(Exception e2) {
-			dLog.error("Exception in getOrder: "+e2.getMessage());
-			e2.printStackTrace();
+			dLog.error("Exception in getOrder", e2);
 		}
 		finally {
 			//ensure that conn/stmt is close regardless of the errors in try/catch
@@ -236,12 +234,10 @@ public class OrderSvcImpl implements IOrderSvc {
 			}
 		} 
 		catch (SQLException e1) {
-			dLog.error("SQLException in storeOrder: "+e1.getMessage());
-			e1.printStackTrace();
+			dLog.error("SQLException in storeOrder", e1);
 		}
 		catch(Exception e2) {
-			dLog.error("Exception in storeOrder: "+e2.getMessage());
-			e2.printStackTrace();
+			dLog.error("Exception in storeOrder", e2);
 		}
 		finally {
 			//ensure that conn/stmt is close regardless of the errors in try/catch
@@ -298,12 +294,10 @@ public class OrderSvcImpl implements IOrderSvc {
 			}
 		}
 		catch (SQLException e1) {
-			dLog.error("SQLException in deleteOrder: "+e1.getMessage());
-			e1.printStackTrace();
+			dLog.error("SQLException in deleteOrder", e1);
 		}
 		catch(Exception e2) {
-			dLog.error("Exception in deleteOrder: "+e2.getMessage());
-			e2.printStackTrace();
+			dLog.error("Exception in deleteOrder", e2);
 		}
 		finally {
 			//ensure that conn/stmt is close regardless of the errors in try/catch
@@ -338,12 +332,10 @@ public class OrderSvcImpl implements IOrderSvc {
 			}
 		} 
 		catch (SQLException e1) {
-			dLog.error("SQLException in getAllOrders: "+e1.getMessage());
-			e1.printStackTrace();
+			dLog.error("SQLException in getAllOrders", e1);
 		}
 		catch(Exception e2) {
-			dLog.error("Exception in getAllOrders: "+e2.getMessage());
-			e2.printStackTrace();
+			dLog.error("Exception in getAllOrders", e2);
 		}
 		finally {
 			//ensure that conn/stmt is close regardless of the errors in try/catch

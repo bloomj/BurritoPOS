@@ -96,10 +96,10 @@ public class BurritoDialog extends JDialog {
         ClassPathXmlApplicationContext beanfactory = null;
         try {
             beanfactory = new ClassPathXmlApplicationContext(SPRING_CONFIG_DEFAULT);
-    		bManager = (BurritoManager)beanfactory.getBean("BurritoManager");
+    		bManager = (BurritoManager)beanfactory.getBean("burritoManager");
 
         } catch (Exception e) {
-            e.printStackTrace();
+            dLog.error("Unable to set Spring bean", e);
         } finally {
             if (beanfactory != null) {
                 beanfactory.close();
@@ -600,8 +600,7 @@ public class BurritoDialog extends JDialog {
 				whiteRiceChk.setEnabled(false);
 		}
 		catch(Exception e) {
-			dLog.error("Exception in initAvailableOptions: "+e.getMessage());
-			e.printStackTrace();
+			dLog.error("Exception in initAvailableOptions", e);
 		}
 	}
 	
@@ -668,8 +667,7 @@ public class BurritoDialog extends JDialog {
 			}
 		}
 		catch(Exception e) {
-			dLog.error("Exception in constrainTort: "+e.getMessage());
-			e.printStackTrace();
+			dLog.error("Exception in constrainTort", e);
 		}
 	}
 	
@@ -680,8 +678,7 @@ public class BurritoDialog extends JDialog {
 			priceLbl.setText("Total Price: $" + newBurrito.getPrice());
 		}
 		catch(Exception e) {
-			dLog.error("Exception in updateBurritoCost: "+e.getMessage());
-			e.printStackTrace();
+			dLog.error("Exception in updateBurritoCost", e);
 		}
 	}
 	
@@ -756,8 +753,7 @@ public class BurritoDialog extends JDialog {
 			updateBurritoCost();
 		}
 		catch(Exception e) {
-			dLog.error("Exception in setBurrito: "+e.getMessage());
-			e.printStackTrace();
+			dLog.error("Exception in setBurrito", e);
 		}
 	}
 	

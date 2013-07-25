@@ -30,8 +30,7 @@ public class ManagerSvcImpl extends BaseSvcImpl implements IManagerSvc {
 			tranx.commit();
 		} 
 		catch(Exception e) {
-			dLog.error("Exception in getManager: "+e.getMessage());
-			e.printStackTrace();
+			dLog.error("Exception in getManager", e);
 		}
 		finally {
 			//ensure that session is close regardless of the errors in try/catch
@@ -61,9 +60,7 @@ public class ManagerSvcImpl extends BaseSvcImpl implements IManagerSvc {
 			}
 		} 
 		catch(Exception e) {
-			dLog.error("Exception in storeManager: "+e.getMessage());
-			e.printStackTrace();
-			result = false;
+			dLog.error("Exception in storeManager", e);
 		}
 		finally {
 			//ensure that session is close regardless of the errors in try/catch
@@ -93,9 +90,7 @@ public class ManagerSvcImpl extends BaseSvcImpl implements IManagerSvc {
 			}
 		}
 		catch(Exception e) {
-			dLog.error("Exception in deleteManger: "+e.getMessage());
-			e.printStackTrace();
-			result = false;
+			dLog.error("Exception in deleteManger", e);
 		}
 		finally {
 			//ensure that session is close regardless of the errors in try/catch

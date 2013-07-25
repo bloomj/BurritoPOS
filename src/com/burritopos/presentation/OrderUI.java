@@ -76,11 +76,11 @@ public class OrderUI extends JInternalFrame {
         ClassPathXmlApplicationContext beanfactory = null;
         try {
             beanfactory = new ClassPathXmlApplicationContext(SPRING_CONFIG_DEFAULT);
-            iManager = (InventoryManager)beanfactory.getBean("InventoryManager");
-            oManager = (OrderManager)beanfactory.getBean("OrderManager");
+            iManager = (InventoryManager)beanfactory.getBean("inventoryManager");
+            oManager = (OrderManager)beanfactory.getBean("orderManager");
 
         } catch (Exception e) {
-            e.printStackTrace();
+            dLog.error("Error setting Spring bean", e);
         } finally {
             if (beanfactory != null) {
                 beanfactory.close();
@@ -240,8 +240,7 @@ public class OrderUI extends JInternalFrame {
 			}	
 		}
 		catch(Exception e) {
-			dLog.error("Exception in addBurritoBtnOnClick: "+e.getMessage());
-			e.printStackTrace();
+			dLog.error("Exception in addBurritoBtnOnClick", e);
 		}
 	}
 
@@ -277,8 +276,7 @@ public class OrderUI extends JInternalFrame {
 			}
 		}
 		catch(Exception e) {
-			dLog.error("Exception in editBurritoBtnOnClick: "+e.getMessage());
-			e.printStackTrace();
+			dLog.error("Exception in editBurritoBtnOnClick", e);
 		}
 	}
 	
@@ -308,8 +306,7 @@ public class OrderUI extends JInternalFrame {
 			}
 		}
 		catch(Exception e) {
-			dLog.error("Exception in remBurritoBtnOnClick: "+e.getMessage());
-			e.printStackTrace();
+			dLog.error("Exception in remBurritoBtnOnClick", e);
 		}
 	}
 	
@@ -331,8 +328,7 @@ public class OrderUI extends JInternalFrame {
 			}
 		}
 		catch(Exception e) {
-			dLog.error("Exception in submitBtnOnClick: "+e.getMessage());
-			e.printStackTrace();
+			dLog.error("Exception in submitBtnOnClick", e);
 		}
 	}
 	
@@ -357,8 +353,7 @@ public class OrderUI extends JInternalFrame {
 				}
 			}
 			catch(Exception e) {
-				dLog.error("Exception in cancelBtnOnClick: "+e.getMessage());
-				e.printStackTrace();
+				dLog.error("Exception in cancelBtnOnClick", e);
 			}
 			
 			dLog.trace("Closing Order Creation Form");
@@ -372,8 +367,7 @@ public class OrderUI extends JInternalFrame {
 			priceLbl.setText("Total Price: $" + newOrder.getTotalCost());
 		}
 		catch(Exception e) {
-			dLog.error("Exception in updateTotalCost: "+e.getMessage());
-			e.printStackTrace();
+			dLog.error("Exception in updateTotalCost", e);
 		}
 	}
 }

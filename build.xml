@@ -1,19 +1,20 @@
 <?xml version="1.0"?>
 <project name="BurritoPOSClient" default="runjar" basedir=".">
 
+	<!-- use ant propert file.separator for better platform independence -->
     <!-- properties are typically defined first -->
-    <property name="src.dir" value="${basedir}/src"/>
-    <property name="lib.dir" value="${basedir}/lib"/>
-    <property name="bin.dir" value="${basedir}/bin"/>
-    <property name="build.dir" value="${basedir}/build"/>
-    <property name="config.dir" value="${basedir}/config"/>
-    <property name="report.dir" value="${build.dir}/report"/>
+    <property name="src.dir" value="${basedir}${file.separator}src"/>
+    <property name="lib.dir" value="${basedir}${file.separator}lib"/>
+    <property name="bin.dir" value="${basedir}${file.separator}bin"/>
+    <property name="build.dir" value="${basedir}${file.separator}build"/>
+    <property name="config.dir" value="${basedir}${file.separator}config"/>
+    <property name="report.dir" value="${build.dir}${file.separator}report"/>
 
 	<!-- paths are then defined after the properties -->
 	<path id="classpath">
-		<pathelement location="${lib.dir}\*"/>
-		<pathelement location="${bin.dir}\*"/>
-		<pathelement location="${build.dir}\BurritoPOSclient.jar"/>
+		<pathelement location="${lib.dir}${file.separator}*"/>
+		<pathelement location="${bin.dir}${file.separator}*"/>
+		<pathelement location="${build.dir}${file.separator}BurritoPOSclient.jar"/>
 	</path>
 	
     <!-- finally, define the targets that use Ant’s tasks -->
@@ -32,15 +33,15 @@
 	</target>
 
 	<target name="buildjar" depends="clean">
-	    <jar jarfile="${build.dir}/BurritoPOSclient.jar">
+	    <jar jarfile="${build.dir}${file.separator}BurritoPOSclient.jar">
 			<fileset dir="${basedir}">
 			    <include name="config/*"/>
 			</fileset>
 	      	<fileset dir="${bin.dir}">
-	      		<include name="**/applicationContext.xml"/>
-	      		<include name="**/burritopos.properties"/>
-	      		<include name="**/hibernate/*.xml"/>
-	    	    <include name="**/*.class"/>
+	      		<include name="**${file.separator}applicationContext.xml"/>
+	      		<include name="**${file.separator}burritopos.properties"/>
+	      		<include name="**${file.separator}hibernate${file.separator}*.xml"/>
+	    	    <include name="**${file.separator}*.class"/>
 	      	</fileset>
 
 		 	<manifest>
@@ -49,7 +50,7 @@
 	    </jar>
 	    <copy todir="${build.dir}">
 		 <fileset dir="${basedir}">
-	    	<include name="config*/**/*"/>
+	    	<include name="config*${file.separator}**${file.separator}*"/>
 		 </fileset>
 	    </copy>
 	</target>
@@ -67,7 +68,7 @@
             
         	<!-- Run all Test Cases, ignoring the abstract base class -->
             <batchtest todir="${report.dir}">
-                <fileset dir="${src.dir}" includes="**/*TestCase.java" excludes="**/*BurritoPOSTestCase.java"/>
+                <fileset dir="${src.dir}" includes="**${file.separator}*TestCase.java" excludes="**${file.separator}*BurritoPOSTestCase.java"/>
             </batchtest>
         </junit>
     </target>
@@ -75,13 +76,13 @@
     <target name="junitreport" depends="junit">
         <junitreport todir="${report.dir}">
             <fileset dir="${report.dir}" includes="TEST-*.xml"/>
-            <report todir="${report.dir}/xml"/>
-        	<report format="frames" todir="${report.dir}/html"/>
+            <report todir="${report.dir}${file.separator}xml"/>
+        	<report format="frames" todir="${report.dir}${file.separator}html"/>
         </junitreport>
     </target>
 
 	<target name="javadoc" depends="junitreport">
-		<javadoc access="public" author="true" destdir="doc" classpath="${lib.dir}\*" doctitle="Burrito Point of Service" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="com.burritopos.*" source="1.7" sourcepath="src" splitindex="true" use="true" version="true" executable="C:\Program Files (x86)\Java\jdk1.7.0_11\bin\javadoc.exe"/>
+		<javadoc access="public" author="true" destdir="doc" classpath="${lib.dir}${file.separator}*" doctitle="Burrito Point of Service" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="com.burritopos.*" source="1.7" sourcepath="src" splitindex="true" use="true" version="true" executable="javadoc.exe"/>
 	</target>
 	
 	<target name="runjar" depends="javadoc">

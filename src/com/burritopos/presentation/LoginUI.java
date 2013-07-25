@@ -52,7 +52,7 @@ public class LoginUI extends JFrame  {
             authSvc = (AuthenticationSvcSocketImpl)beanfactory.getBean("authSvc");
 
         } catch (Exception e) {
-            e.printStackTrace();
+            dLog.error("Error setting Spring bean", e);
         } finally {
             if (beanfactory != null) {
                 beanfactory.close();
@@ -138,8 +138,7 @@ public class LoginUI extends JFrame  {
 			}
 		}
 		catch(Exception e) {
-			dLog.error("Error");
-			e.printStackTrace();
+			dLog.error("Error submitting request", e);
 		}
 	}
 	

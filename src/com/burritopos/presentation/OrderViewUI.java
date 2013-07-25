@@ -73,7 +73,7 @@ public class OrderViewUI extends JInternalFrame {
 			oManager = (OrderManager)beanfactory.getBean("OrderManager");
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			dLog.error("Error setting Spring bean", e);
 		} finally {
 			if (beanfactory != null) {
 				beanfactory.close();
@@ -129,8 +129,7 @@ public class OrderViewUI extends JInternalFrame {
 			}
 		}
 		catch(Exception e) {
-			dLog.error("Error in getting history: " + e.getMessage());
-			e.printStackTrace();
+			dLog.error("Error in getting history", e);
 		}
 
 		updateTotalSales();
@@ -211,8 +210,7 @@ public class OrderViewUI extends JInternalFrame {
 			}
 		}
 		catch(Exception e) {
-			dLog.error("Exception in deleteOrderBtnOnClick: "+e.getMessage());
-			e.printStackTrace();
+			dLog.error("Exception in deleteOrderBtnOnClick", e);
 		}
 	}
 
@@ -240,8 +238,7 @@ public class OrderViewUI extends JInternalFrame {
 			priceLbl.setText("Total Sales: $" + totalSales);
 		}
 		catch(Exception e) {
-			dLog.error("Exception in updateTotalCost: "+e.getMessage());
-			e.printStackTrace();
+			dLog.error("Exception in updateTotalCost", e);
 		}
 	}
 }

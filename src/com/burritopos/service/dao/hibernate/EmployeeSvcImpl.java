@@ -30,8 +30,7 @@ public class EmployeeSvcImpl extends BaseSvcImpl implements IEmployeeSvc {
 			tranx.commit();
 		} 
 		catch(Exception e1) {
-			dLog.error("Exception in getEmployee: "+e1.getMessage());
-			e1.printStackTrace();
+			dLog.error("Exception in getEmployee", e1);
 		}
 		finally {
 			//ensure that session is close regardless of the errors in try/catch
@@ -61,9 +60,7 @@ public class EmployeeSvcImpl extends BaseSvcImpl implements IEmployeeSvc {
 			}
 		} 
 		catch(Exception e1) {
-			dLog.error("Exception in storeEmployee: "+e1.getMessage());
-			e1.printStackTrace();
-			result = false;
+			dLog.error("Exception in storeEmployee", e1);
 		}
 		finally {
 			//ensure that session is close regardless of the errors in try/catch
@@ -92,9 +89,8 @@ public class EmployeeSvcImpl extends BaseSvcImpl implements IEmployeeSvc {
 				result = true;
 			}
 		}
-		catch(Exception e1) {
-			dLog.error("Exception in deleteEmployee: "+e1.getMessage());
-			result = false;
+		catch(Exception e) {
+			dLog.error("Exception in deleteEmployee", e);
 		}
 		finally {
 			//ensure that session is close regardless of the errors in try/catch
