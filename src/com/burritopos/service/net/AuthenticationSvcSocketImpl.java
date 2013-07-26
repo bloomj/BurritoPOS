@@ -86,14 +86,25 @@ public class AuthenticationSvcSocketImpl implements IAuthenticationSvc {
         }
         finally {
         	try {
-        		in.close();
-        		out.close();
-        		socket.close();
+        		dLog.trace("Trying to close input stream");
+        		if(in != null) {
+        			in.close();
+        		}
+        		dLog.trace("Trying to close output stream");
+        		if(out != null) {
+        			out.close();
+        		}
+        		dLog.trace("Trying to close socket");
+        		if(socket != null) {
+        			socket.close();
+        		}
         	} catch (Exception e2) {
         		dLog.error("Exception closing socket", e2);
+        		throw(e2);
         	}
         }
 
+        dLog.trace("Returning result: " + result);
         return result;
     }
 }

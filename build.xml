@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <project name="BurritoPOSClient" default="runjar" basedir=".">
 
-	<!-- use ant propert file.separator for better platform independence -->
+	<!-- use ant property file.separator for better platform independence -->
     <!-- properties are typically defined first -->
     <property name="src.dir" value="${basedir}${file.separator}src"/>
     <property name="lib.dir" value="${basedir}${file.separator}lib"/>
