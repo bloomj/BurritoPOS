@@ -19,7 +19,7 @@ Currently demonstrates
 * MySQL
 * Factory, Facade Patterns
 * N-tier architecture
-* client/server comms
+* client/server comms (Cleartext & TLS)
 * Mongo (NoSQL)
 * Javadoc
   
@@ -32,3 +32,7 @@ TODO
 Notes
 -------------------------
 * junit dlls were placed in ant\lib for proper ant build
+* If a javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: 
+	PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target 
+	error occurs, check the keystore against the servername to ensure the certificate exists (trust is currently ignored)
+* keytool -genkey -keyalg RSA -alias <machine_name> -keystore <pathtokeystore>.jks -storepass changeit -validity 360 -keysize 4096

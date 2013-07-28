@@ -16,7 +16,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 //import com.burritopos.business.Encryptor;
 import com.burritopos.domain.Employee;
-import com.burritopos.service.net.AuthenticationSvcSocketImpl;
 import com.burritopos.service.net.IAuthenticationSvc;
 
 /**
@@ -49,7 +48,7 @@ public class LoginUI extends JFrame  {
         ClassPathXmlApplicationContext beanfactory = null;
         try {
             beanfactory = new ClassPathXmlApplicationContext(SPRING_CONFIG_DEFAULT);
-            authSvc = (AuthenticationSvcSocketImpl)beanfactory.getBean("authSvc");
+            authSvc = (IAuthenticationSvc)beanfactory.getBean("secureAuthSvc");
 
         } catch (Exception e) {
             dLog.error("Error setting Spring bean", e);

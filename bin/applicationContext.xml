@@ -30,6 +30,18 @@
         </constructor-arg>
     </bean>
     
+    <bean id="keystorePath" class="java.lang.String">
+        <constructor-arg type="java.lang.String">
+            <value>${ssl.keyStore.path}</value>
+        </constructor-arg>
+    </bean>
+    
+    <bean id="keystorePassword" class="java.lang.String">
+        <constructor-arg type="java.lang.String">
+            <value>${ssl.keyStore.password}</value>
+        </constructor-arg>
+    </bean>
+    
 	<!-- Presentation Layer -->
 	<!-- Going to statically load these for variation -->
 	<!-- <bean id="burritoDialog" class="com.burritopos.presentation.BurritoDialog">
@@ -60,12 +72,27 @@
     <bean id="orderManager" class="com.burritopos.business.OrderManager" scope="singleton"/>
 	
 	<!-- Service Layer, get/set methods -->
-	<bean id="authSvc" class="com.burritopos.service.net.AuthenticationSvcSocketImpl" scope="singleton">
+	<!-- Use secure authentication socket -->
+	<!-- <bean id="authSvc" class="com.burritopos.service.net.AuthenticationSvcSocketImpl" scope="singleton">
 		<constructor-arg type="java.lang.String">
             <ref bean="burritoposServerIP"/>
         </constructor-arg>
         <constructor-arg type="java.lang.String">
             <ref bean="burritoposServerPort"/>
+        </constructor-arg>
+	</bean> -->
+	<bean id="secureAuthSvc" class="com.burritopos.service.net.SecureAuthenticationSvcSocketImpl" scope="singleton">
+		<constructor-arg type="java.lang.String">
+            <ref bean="burritoposServerIP"/>
+        </constructor-arg>
+        <constructor-arg type="java.lang.String">
+            <ref bean="burritoposServerPort"/>
+        </constructor-arg>
+        <constructor-arg type="java.lang.String">
+            <ref bean="keystorePath"/>
+        </constructor-arg>
+        <constructor-arg type="java.lang.String">
+            <ref bean="keystorePassword"/>
         </constructor-arg>
 	</bean>
 	<bean id="burritoSvc" class="com.burritopos.service.dao.mongo.BurritoSvcImpl" scope="singleton"/>
@@ -90,6 +117,7 @@
 	
 	<!-- Service Layer -->
 	<!-- <bean id="authSvcTestCase" class="com.burritopos.service.test.AuthenticationSvcImplTestCase" scope="singleton"/> -->
+	<!-- <bean id="secureAuthSvcTestCase" class="com.burritopos.service.test.SecureAuthenticationSvcImplTestCase" scope="singleton"/> -->
 	<bean id="burritoSvcTestCase" class="com.burritopos.service.test.BurritoSvcImplTestCase"/>
 	<bean id="customerSvcTestCase" class="com.burritopos.service.test.CustomerSvcImplTestCase"/>
 	<bean id="employeeSvcTestCase" class="com.burritopos.service.test.EmployeeSvcImplTestCase"/>

@@ -15,9 +15,9 @@ import com.burritopos.domain.Manager;
  */
 public class AuthenticationSvcSocketImpl implements IAuthenticationSvc {
     private static Logger dLog = Logger.getLogger(AuthenticationSvcSocketImpl.class);
-    Socket socket = null;
-    ObjectInputStream in = null;
-    ObjectOutputStream out = null;
+    private Socket socket = null;
+    private ObjectInputStream in = null;
+    private ObjectOutputStream out = null;
     
     private static String BURRITOPOS_SERVER_IP;
     private static int BURRITOPOS_SERVER_PORT;

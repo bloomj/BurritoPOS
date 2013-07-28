@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="0" failures="0" hostname="ISS204646" name="com.burritopos.domain.test.ManagerTestCase" skipped="0" tests="4" time="0.005" timestamp="2013-07-25T14:03:17">
+<testsuite errors="0" failures="0" hostname="ISS204646" name="com.burritopos.domain.test.ManagerTestCase" skipped="0" tests="4" time="0.005" timestamp="2013-07-28T11:28:08">
   <properties>
     <property name="java.vendor" value="Oracle Corporation" />
     <property name="lib.dir" value="C:\Users\james.bloom\workspace\BurritoPOS\lib" />
