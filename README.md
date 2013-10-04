@@ -28,6 +28,7 @@ TODO
 * Move connection strings, other properties to properties file
 * Encrypt passwords
 * Refactor to package by feature instead of by layer
+* Refactor presentation layer to use MVC or MVP and incorporate UI unit test; perhaps FEST or UISpec4J?
   
 Notes
 -------------------------
