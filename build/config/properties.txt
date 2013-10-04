@@ -1,6 +1,0 @@
-IBurritoSvc = com.burritopos.service.dao.jdbc.BurritoSvcCImpl
-ICustomerSvc = com.burritopos.service.dao.jdbc.CustomerSvcImpl
-IEmployeeSvc = com.burritopos.service.dao.jdbc.EmployeeSvcImpl
-IInventorySvc = com.burritopos.service.dao.jdbc.InventorySvcImpl
-IManagerSvc = com.burritopos.service.dao.jdbc.ManagerSvcImpl
-IOrderSvc = com.burritopos.service.dao.jdbc.OrderSvcImpl
